@@ -1,0 +1,393 @@
+{
+  "admins": [
+    {
+      "id": "admin_001",
+      "name": "Cosmos Admin",
+      "email": "admin@cosmos.com",
+      "passwordHash": "$2a$10$sDKjpAUm/Nov5IcLI9NUF.QoMDZuW1fJ3WYxmPwbW06PuogttC0FC",
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "user_001",
+      "name": "Demo User",
+      "email": "demo@cosmos.com",
+      "passwordHash": "$2a$10$IZoQQc8nT4B4Je5ybM.kWektR5iAjemn7tN2meFh6GE5YRILQq6I2",
+      "phone": "9876543210",
+      "address": "",
+      "wishlist": [],
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": "user_1788594725088",
+      "name": "moradiya zeel",
+      "email": "admin@cosmos.com",
+      "passwordHash": "$2a$10$r1ZMNX5tujnUOnbwDnKci.uahzap44d2ANhRyZUP6dwcaLs6kD0li",
+      "phone": "8200405155",
+      "address": "77, vijayraj,, katargam",
+      "wishlist": [],
+      "status": "active",
+      "createdAt": "2026-09-05T07:52:05.379Z",
+      "pincode": "",
+      "city": ""
+    }
+  ],
+  "brands": [
+    {
+      "id": "brand_001",
+      "name": "Luna Threads",
+      "description": "Everyday fashion essentials with a soft, feminine touch.",
+      "logo": "/assets/brands/luna-threads.png",
+      "category": "fashion"
+    },
+    {
+      "id": "brand_002",
+      "name": "Glow & Co.",
+      "description": "Clean, skin-friendly beauty and skincare.",
+      "logo": "/assets/brands/glow-co.png",
+      "category": "beauty"
+    },
+    {
+      "id": "brand_003",
+      "name": "Petal Studio",
+      "description": "Statement fashion pieces for every occasion.",
+      "logo": "/assets/brands/petal-studio.png",
+      "category": "fashion"
+    },
+    {
+      "id": "brand_004",
+      "name": "Bloom Beauty",
+      "description": "Makeup and beauty tools loved by Gen Z.",
+      "logo": "/assets/brands/bloom-beauty.png",
+      "category": "beauty"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod_001",
+      "name": "Pastel Wrap Dress",
+      "description": "Flowy wrap dress in soft pastel tones, perfect for daywear.",
+      "price": 1499,
+      "originalPrice": 1899,
+      "category": "clothes",
+      "brandId": "brand_001",
+      "image": "/assets/uploads/file-1788511780522-132494189.png",
+      "images": [
+        "/assets/uploads/file-1788511780522-132494189.png"
+      ],
+      "videos": [
+        "/assets/uploads/file-1788511691683-919486464.mp4"
+      ],
+      "badge": "New",
+      "stock": 24
+    },
+    {
+      "id": "prod_002",
+      "name": "Denim Jacket",
+      "description": "Classic oversized denim jacket with a relaxed fit.",
+      "price": 1899,
+      "originalPrice": null,
+      "category": "clothes",
+      "brandId": "brand_003",
+      "image": "/assets/products/denim-jacket.jpg",
+      "images": [
+        "/assets/products/denim-jacket.jpg"
+      ],
+      "videos": [],
+      "badge": null,
+      "stock": 15
+    },
+    {
+      "id": "prod_003",
+      "name": "Embroidered Kurti",
+      "description": "Hand-embroidered kurti in breathable cotton fabric.",
+      "price": 1099,
+      "originalPrice": 1399,
+      "category": "clothes",
+      "brandId": "brand_001",
+      "image": "/assets/products/embroidered-kurti.jpg",
+      "images": [
+        "/assets/products/embroidered-kurti.jpg"
+      ],
+      "videos": [],
+      "badge": "Sale",
+      "stock": 30
+    },
+    {
+      "id": "prod_004",
+      "name": "Hydra Glow Serum",
+      "description": "Lightweight hyaluronic serum for all-day hydration.",
+      "price": 649,
+      "originalPrice": 799,
+      "category": "beauty",
+      "brandId": "brand_002",
+      "image": "/assets/products/hydra-glow-serum.jpg",
+      "images": [
+        "/assets/products/hydra-glow-serum.jpg"
+      ],
+      "videos": [],
+      "badge": "Bestseller",
+      "stock": 50
+    },
+    {
+      "id": "prod_005",
+      "name": "Matte Lipstick Set",
+      "description": "5-shade matte lipstick set in everyday wearable tones.",
+      "price": 899,
+      "originalPrice": null,
+      "category": "beauty",
+      "brandId": "brand_004",
+      "image": "/assets/products/matte-lipstick-set.jpg",
+      "images": [
+        "/assets/products/matte-lipstick-set.jpg"
+      ],
+      "videos": [],
+      "badge": null,
+      "stock": 40
+    },
+    {
+      "id": "prod_006",
+      "name": "Rose Clay Face Mask",
+      "description": "Purifying rose clay mask for a natural glow.",
+      "price": 549,
+      "originalPrice": 699,
+      "category": "beauty",
+      "brandId": "brand_002",
+      "image": "/assets/products/rose-clay-mask.jpg",
+      "images": [
+        "/assets/products/rose-clay-mask.jpg"
+      ],
+      "videos": [],
+      "badge": "Sale",
+      "stock": 35
+    },
+    {
+      "id": "prod_007",
+      "name": "Satin Slip Skirt",
+      "description": "Bias-cut satin midi skirt with a subtle sheen.",
+      "price": 1299,
+      "originalPrice": null,
+      "category": "clothes",
+      "brandId": "brand_003",
+      "image": "/assets/products/satin-slip-skirt.jpg",
+      "images": [
+        "/assets/products/satin-slip-skirt.jpg"
+      ],
+      "videos": [],
+      "badge": null,
+      "stock": 18
+    },
+    {
+      "id": "prod_008",
+      "name": "Everyday Kajal Duo",
+      "description": "Smudge-proof kajal duo for a soft everyday look.",
+      "price": 349,
+      "originalPrice": 449,
+      "category": "beauty",
+      "brandId": "brand_004",
+      "image": "/assets/products/kajal-duo.jpg",
+      "images": [
+        "/assets/products/kajal-duo.jpg"
+      ],
+      "videos": [],
+      "badge": "Sale",
+      "stock": 60
+    },
+    {
+      "id": "prod_009",
+      "name": "Quilted Leather Crossbody Purse",
+      "description": "Premium quilted leather crossbody purse with gold chain strap.",
+      "price": 1699,
+      "originalPrice": 2199,
+      "category": "fashion",
+      "brandId": "brand_003",
+      "image": "",
+      "images": [],
+      "videos": [],
+      "badge": "Hot",
+      "stock": 20
+    },
+    {
+      "id": "prod_010",
+      "name": "Crystal Stiletto Heels",
+      "description": "Elegant pointed-toe stiletto heels embellished with sparkling crystals.",
+      "price": 2499,
+      "originalPrice": 2999,
+      "category": "fashion",
+      "brandId": "brand_001",
+      "image": "",
+      "images": [],
+      "videos": [],
+      "badge": "New",
+      "stock": 14
+    },
+    {
+      "id": "prod_011",
+      "name": "Oversized UV Sunglasses",
+      "description": "Chic retro oversized sunglasses with 100% UV protection.",
+      "price": 799,
+      "originalPrice": 999,
+      "category": "fashion",
+      "brandId": "brand_003",
+      "image": "",
+      "images": [],
+      "videos": [],
+      "badge": "Trending",
+      "stock": 40
+    },
+    {
+      "id": "prod_012",
+      "name": "Embellished Velvet Evening Clutch",
+      "description": "Handcrafted velvet clutch bag with crystal brooch detail for partywear.",
+      "price": 1299,
+      "originalPrice": 1599,
+      "category": "fashion",
+      "brandId": "brand_001",
+      "image": "",
+      "images": [],
+      "videos": [],
+      "badge": null,
+      "stock": 25
+    },
+    {
+      "id": "prod_013",
+      "name": "Strappy Block Heel Sandals",
+      "description": "Comfortable & stylish open-toe strappy block heels for everyday fashion.",
+      "price": 1499,
+      "originalPrice": 1899,
+      "category": "fashion",
+      "brandId": "brand_003",
+      "image": "",
+      "images": [],
+      "videos": [],
+      "badge": "Bestseller",
+      "stock": 18
+    },
+    {
+      "id": "prod_014",
+      "name": "Gold Layered Choker Necklace",
+      "description": "18K gold-plated delicate layered choker necklace with pendant.",
+      "price": 999,
+      "originalPrice": 1299,
+      "category": "jewellery",
+      "brandId": "brand_002",
+      "image": "",
+      "images": [],
+      "videos": [],
+      "badge": "New",
+      "stock": 35
+    },
+    {
+      "id": "prod_015",
+      "name": "Pearl Drop Statement Earrings",
+      "description": "Lustrous freshwater pearl drop earrings with crystal studs.",
+      "price": 699,
+      "originalPrice": 899,
+      "category": "jewellery",
+      "brandId": "brand_004",
+      "image": "",
+      "images": [],
+      "videos": [],
+      "badge": "Hot",
+      "stock": 45
+    },
+    {
+      "id": "prod_016",
+      "name": "Crystal Charm Bracelet",
+      "description": "Adjustable silver-toned charm bracelet studded with AAA cubic zirconia.",
+      "price": 849,
+      "originalPrice": 1099,
+      "category": "jewellery",
+      "brandId": "brand_002",
+      "image": "",
+      "images": [],
+      "videos": [],
+      "badge": null,
+      "stock": 30
+    },
+    {
+      "id": "prod_017",
+      "name": "Minimalist Gold Ring Set (5 Pcs)",
+      "description": "Set of 5 stackable gold rings in geometric & twist designs.",
+      "price": 499,
+      "originalPrice": 699,
+      "category": "jewellery",
+      "brandId": "brand_004",
+      "image": "",
+      "images": [],
+      "videos": [],
+      "badge": "Sale",
+      "stock": 50
+    }
+  ],
+  "carts": {
+    "user_001": [],
+    "user_1788594725088": []
+  },
+  "orders": [
+    {
+      "id": "order_1787254333687",
+      "userId": "user_001",
+      "items": [
+        {
+          "productId": "prod_001",
+          "name": "Pastel Wrap Dress",
+          "price": 1499,
+          "image": "/assets/products/pastel-wrap-dress.jpg",
+          "qty": 1
+        }
+      ],
+      "subtotal": 1499,
+      "total": 1499,
+      "shipping": {
+        "name": "Demo User",
+        "phone": "9876543210",
+        "address": "123, Main Street",
+        "city": "Mumbai",
+        "pincode": "400001"
+      },
+      "payment": "cod",
+      "status": "delivered",
+      "createdAt": "2026-08-20T19:32:13.687Z"
+    },
+    {
+      "id": "order_1788595361100",
+      "userId": "user_1788594725088",
+      "items": [
+        {
+          "productId": "prod_006",
+          "name": "Rose Clay Face Mask",
+          "price": 549,
+          "image": "/assets/products/rose-clay-mask.jpg",
+          "qty": 1
+        }
+      ],
+      "subtotal": 549,
+      "total": 549,
+      "shipping": {
+        "name": "moradiya zeel",
+        "phone": "8200405155",
+        "address": "77, vijayraj,, katargam",
+        "city": "surat",
+        "pincode": "395004"
+      },
+      "payment": "cod",
+      "status": "shipped",
+      "createdAt": "2026-09-05T08:02:41.100Z"
+    }
+  ],
+  "productReviews": [
+    {
+      "id": "prev_1788597911420_861",
+      "productId": "prod_001",
+      "userId": "user_1788594725088",
+      "userName": "Anonymous User",
+      "rating": 4,
+      "comment": "fantastic\n",
+      "createdAt": "2026-09-05T08:45:11.420Z"
+    }
+  ],
+  "siteReviews": []
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — Cosmos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="auth-card">
+      <div class="brand-row" style="display:flex; align-items:center; gap:1rem;">
+        <img src="../../assets/images/logo-white.svg" alt="Cosmos Logo" style="height:55px; width:auto; display:block;" />
+        <div>
+          <h2 style="margin:0;">Admin Login</h2>
+          <p style="margin:0.25rem 0 0; color:var(--muted);">Cosmos Admin Panel</p>
+        </div>
+      </div>
+
+      <form id="adminLoginForm" class="stack">
+        <label>Email
+          <input type="email" name="email" placeholder="admin@cosmos.com" required />
+        </label>
+        <label>Password
+          <input type="password" name="password" placeholder="Your password" required />
+        </label>
+        <div style="display:flex; justify-content:flex-end; margin-top:-0.3rem; margin-bottom:0.6rem;">
+          <a href="#" id="openAdminForgotModal" style="font-size:0.83rem; color:var(--accent-light, #ff0054); text-decoration:none; font-weight:700;">Forgot password?</a>
+        </div>
+        <div id="loginError" class="form-error hidden"></div>
+        <button type="submit" class="primary-btn">Login</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Admin Forgot Password Modal -->
+  <div class="auth-modal-overlay hidden" id="adminForgotModal">
+    <div class="auth-modal-box">
+      <button type="button" class="auth-modal-close" id="closeAdminForgotModal">&times;</button>
+      <div class="auth-modal-icon">🛡️</div>
+      <h3 class="auth-modal-title">Reset Admin Password</h3>
+      <p class="auth-modal-desc">
+        Enter your admin email to receive a 6-digit security OTP.
+      </p>
+
+      <!-- Step 1: Send OTP -->
+      <form id="adminForgotStep1Form" class="stack">
+        <label style="text-align:left; font-size:0.85rem; font-weight:600;">Admin Email
+          <input type="email" id="adminForgotEmailInput" placeholder="admin@cosmos.com" required />
+        </label>
+        <div id="adminForgotStep1Error" class="form-error hidden"></div>
+        <button type="submit" id="adminSendOtpBtn" class="primary-btn" style="margin-top:0.5rem;">Send 6-Digit OTP</button>
+      </form>
+
+      <!-- Step 2: Verify OTP & Set New Password -->
+      <form id="adminForgotStep2Form" class="stack hidden">
+        <div style="background:rgba(255,0,84,0.1); border:1px solid rgba(255,0,84,0.25); border-radius:10px; padding:0.8rem; margin-bottom:0.8rem; font-size:0.82rem; color:#ff8da1;">
+          OTP sent to <strong id="adminForgotOtpSentEmail"></strong>
+        </div>
+        <label style="text-align:left; font-size:0.85rem; font-weight:600;">Enter 6-Digit OTP
+          <input type="text" id="adminForgotOtpInput" class="otp-input-field" maxlength="6" placeholder="••••••" required />
+        </label>
+        <label style="text-align:left; font-size:0.85rem; font-weight:600;">New Password
+          <input type="password" id="adminForgotNewPasswordInput" placeholder="Minimum 6 characters" required minlength="6" />
+        </label>
+        <div id="adminForgotStep2Error" class="form-error hidden"></div>
+        <button type="submit" id="adminResetPasswordBtn" class="primary-btn" style="margin-top:0.5rem;">Reset Admin Password</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothes & Products — Cosmos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/shop.css" />
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="page-main">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Clothes & All Products</h2>
+        <p>Explore our complete fashion, clothes, and beauty catalog.</p>
+      </div>
+
+      <!-- Multi-Filter & Search Bar -->
+      <div class="panel" style="margin-bottom: 2rem; padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem;">
+        <!-- Top Row: Category Tabs & Search -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+          <div class="boutique-filter-bar" style="margin: 0; padding: 0; background: none; box-shadow: none;">
+            <button class="boutique-filter active" data-filter="all">All Items</button>
+            <button class="boutique-filter" data-filter="clothes">👗 Clothes</button>
+            <button class="boutique-filter" data-filter="fashion">👠 Fashion & Shoes</button>
+            <button class="boutique-filter" data-filter="jewellery">💎 Jewellery</button>
+            <button class="boutique-filter" data-filter="beauty">💄 Beauty</button>
+          </div>
+
+          <div style="display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap;">
+            <select id="sortSelect" class="pill-btn" style="padding: 0.5rem 0.9rem; background: var(--panel); border: 1.5px solid var(--line); font-size: 0.85rem; font-weight: 600; color: var(--text);">
+              <option value="featured">✨ Sort: Featured</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+              <option value="rating_desc">★ Top Customer Rated</option>
+            </select>
+
+            <div class="search-box" style="margin: 0; min-width: 220px;">
+              <input type="search" id="searchInput" placeholder="Search fashion, beauty..." />
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Filter by Size -->
+        <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; padding-top: 0.8rem; border-top: 1px solid var(--line);">
+          <span style="font-size: 0.82rem; font-weight: 700; color: var(--text);">Filter by Size:</span>
+          <div id="sizeFilterChips" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <button type="button" class="size-filter-chip active" data-size="all">All</button>
+            <button type="button" class="size-filter-chip" data-size="XS">XS</button>
+            <button type="button" class="size-filter-chip" data-size="S">S</button>
+            <button type="button" class="size-filter-chip" data-size="M">M</button>
+            <button type="button" class="size-filter-chip" data-size="L">L</button>
+            <button type="button" class="size-filter-chip" data-size="XL">XL</button>
+            <button type="button" class="size-filter-chip" data-size="UK 5">UK 5</button>
+            <button type="button" class="size-filter-chip" data-size="UK 6">UK 6</button>
+            <button type="button" class="size-filter-chip" data-size="UK 7">UK 7</button>
+            <button type="button" class="size-filter-chip" data-size="UK 8">UK 8</button>
+            <button type="button" class="size-filter-chip" data-size="UK 9">UK 9</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- populated from backend/products -->
+      </div>
+
+      <div class="empty-state hidden" id="emptyState">
+        <div class="icon">🔍</div>
+        <p>No products found. Try a different search or filter.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/product-card.js"></script>
+  <script src="js/shop.js"></script>
+</body>
+</html>

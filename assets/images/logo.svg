@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150" width="100%" height="100%">
+  <defs>
+    <style>
+      .text-logo {
+        font-family: 'Poppins', sans-serif;
+        font-size: 80px;
+        font-weight: 700;
+        fill: #3a223f;
+        letter-spacing: -2px;
+      }
+      .orbit {
+        fill: none;
+        stroke: #d88ea8;
+        stroke-width: 3;
+        stroke-linecap: round;
+      }
+      .star {
+        fill: #d88ea8;
+      }
+      .dot {
+        fill: #d88ea8;
+      }
+    </style>
+  </defs>
+  
+  <!-- Text -->
+  <text x="85" y="105" class="text-logo">Cosmos</text>
+  
+  <!-- Top curve (starts near first 'o', goes to top right star) -->
+  <path class="orbit" d="M 145 65 Q 240 25 320 38" />
+  
+  <!-- Bottom curve (from star, under text, to far left) -->
+  <path class="orbit" d="M 325 55 Q 315 85 270 102 Q 170 135 80 118 Q 50 110 60 85" />
+  
+  <!-- Large Star -->
+  <path class="star" d="M 328 15 Q 332 32 348 38 Q 332 44 328 61 Q 324 44 308 38 Q 324 32 328 15" />
+  
+  <!-- Small Star -->
+  <path class="star" d="M 358 45 Q 360 55 368 58 Q 360 61 358 71 Q 356 61 348 58 Q 356 55 358 45" />
+  
+  <!-- Dot (on bottom curve) -->
+  <circle class="dot" cx="102" cy="116" r="7" />
+</svg>

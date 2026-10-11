@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products — Cosmos Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .pill-btn {
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      border: 1px solid var(--panel-border);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+    .pill-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+    .pill-btn.active {
+      background: rgba(157, 78, 221, 0.15);
+      color: #9d4edd;
+      border-color: #9d4edd;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebarMount"></aside>
+
+    <div class="content">
+      <div class="topbar" id="topbarMount"></div>
+
+      <div class="panel">
+        <!-- Tabs moved via JS to topbar -->
+        <div class="category-tabs hidden" id="categoryTabs" style="display:flex; gap:0.6rem; flex-wrap:wrap; margin-left:1.5rem;">
+          <button class="pill-btn active" data-filter="all">All</button>
+          <button class="pill-btn" data-filter="clothes">Clothes</button>
+          <button class="pill-btn" data-filter="fashion">Fashion</button>
+          <button class="pill-btn" data-filter="jewellery">Jewellery</button>
+          <button class="pill-btn" data-filter="beauty">Beauty</button>
+        </div>
+
+        <div class="table-toolbar" style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <input type="search" id="searchInput" placeholder="Search products..." style="flex:1; min-width: 200px;" />
+          <select id="subCategoryFilter" class="pill-btn" style="display:none;">
+            <!-- populated by JS based on main category tab -->
+          </select>
+          <button class="primary-btn" id="addProductBtn" style="width:auto;">+ Add Product</button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productsBody">
+              <tr><td colspan="5" style="color:var(--muted);">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="empty-state hidden" id="emptyState">
+          <div class="icon">🛍️</div>
+          <p>No products found.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/products.js"></script>
+</body>
+</html>

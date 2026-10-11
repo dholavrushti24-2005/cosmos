@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Cosmos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/shop.css" />
+  <style>
+    .checkout-grid { display: grid; grid-template-columns: 1fr 340px; gap: 2rem; align-items: start; }
+    .checkout-summary-row { display: flex; justify-content: space-between; padding: 0.5rem 0; color: var(--muted); }
+    .checkout-summary-total { display: flex; justify-content: space-between; padding-top: 0.8rem; margin-top: 0.6rem; border-top: 1px solid var(--line); font-size: 1.15rem; font-weight: 800; }
+    @media (max-width: 860px) { .checkout-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="page-main">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Checkout</h2>
+        <p>Enter your shipping details to place the order.</p>
+      </div>
+
+      <div class="checkout-grid">
+        <form id="checkoutForm" class="panel stack">
+          <h3 style="margin-top:0;">Shipping Details</h3>
+          <label>Full Name
+            <input type="text" name="name" required />
+          </label>
+          <label>Phone
+            <input type="tel" name="phone" required />
+          </label>
+          <label>Address
+            <textarea name="address" required placeholder="House no, street, area"></textarea>
+          </label>
+          <div class="two-cols">
+            <label>City
+              <input type="text" name="city" required />
+            </label>
+            <label>Pincode
+              <input type="text" name="pincode" required />
+            </label>
+          </div>
+          <label>Payment Method
+          <label>Payment Option
+            <select name="payment" id="paymentSelect">
+              <option value="online">⚡ Online Payment (UPI, Google Pay, Cards, Net Banking)</option>
+              <option value="cod">💵 Cash on Delivery (COD)</option>
+            </select>
+          </label>
+          <button type="submit" id="placeOrderBtn" class="primary-btn">Proceed to Payment →</button>
+        </form>
+
+        <div class="panel">
+          <h3 style="margin-top:0;">Order Summary</h3>
+          <div id="checkoutItemsList"></div>
+          <div class="checkout-summary-row"><span>Subtotal</span><span id="checkoutSubtotal">₹0</span></div>
+          <div class="checkout-summary-row hidden" id="checkoutDiscountRow" style="color: var(--success); font-weight: 700;">
+            <span>Coupon (<span id="checkoutCouponLabel"></span>)</span>
+            <span id="checkoutDiscountVal">-₹0</span>
+          </div>
+          <div class="checkout-summary-row"><span>Delivery</span><span id="checkoutDelivery">Free</span></div>
+          <div class="checkout-summary-total"><span>Total</span><span id="checkoutTotal">₹0</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Cosmos Mock Payment Gateway Modal (Amazon Pay / Razorpay style) -->
+  <div class="pg-overlay hidden" id="pgOverlay">
+    <div class="pg-modal">
+      <div class="pg-header">
+        <div class="pg-brand">
+          <span class="pg-logo-badge">COSMOS PAY</span>
+          <span class="pg-secure-badge">🔒 256-bit Secure Gateway</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:1.2rem;">
+          <div class="pg-amount-box">
+            <div class="pg-amount-label">Amount Payable</div>
+            <div class="pg-amount-val" id="pgPayableAmount">₹0</div>
+          </div>
+          <button type="button" class="pg-close-btn" id="pgCloseBtn">&times;</button>
+        </div>
+      </div>
+
+      <div class="pg-body">
+        <!-- Payment Methods Sidebar -->
+        <div class="pg-sidebar">
+          <button type="button" class="pg-nav-item active" data-tab="upi">
+            <span>📱</span> UPI / QR Code
+          </button>
+          <button type="button" class="pg-nav-item" data-tab="card">
+            <span>💳</span> Cards (Credit/Debit)
+          </button>
+          <button type="button" class="pg-nav-item" data-tab="netbanking">
+            <span>🏦</span> Net Banking
+          </button>
+          <button type="button" class="pg-nav-item" data-tab="cod">
+            <span>💵</span> Cash on Delivery
+          </button>
+        </div>
+
+        <!-- Payment Content Panel -->
+        <div class="pg-content">
+          <!-- UPI Tab -->
+          <div class="pg-tab-pane active" id="pane-upi">
+            <div class="pg-qr-wrapper">
+              <p style="margin:0 0 0.5rem; font-size:0.85rem; font-weight:700; color:#334155;">Scan QR with any UPI App</p>
+              <!-- SVG Realistic QR Code -->
+              <svg class="pg-qr-code" viewBox="0 0 100 100" fill="#18181b">
+                <rect x="0" y="0" width="100" height="100" fill="#ffffff"/>
+                <!-- Corner 1 -->
+                <rect x="10" y="10" width="24" height="24" fill="#000"/>
+                <rect x="14" y="14" width="16" height="16" fill="#fff"/>
+                <rect x="18" y="18" width="8" height="8" fill="#000"/>
+                <!-- Corner 2 -->
+                <rect x="66" y="10" width="24" height="24" fill="#000"/>
+                <rect x="70" y="14" width="16" height="16" fill="#fff"/>
+                <rect x="74" y="18" width="8" height="8" fill="#000"/>
+                <!-- Corner 3 -->
+                <rect x="10" y="66" width="24" height="24" fill="#000"/>
+                <rect x="14" y="70" width="16" height="16" fill="#fff"/>
+                <rect x="18" y="74" width="8" height="8" fill="#000"/>
+                <!-- Data blocks -->
+                <rect x="42" y="12" width="6" height="6"/>
+                <rect x="52" y="12" width="6" height="6"/>
+                <rect x="46" y="24" width="8" height="8"/>
+                <rect x="42" y="38" width="16" height="6"/>
+                <rect x="12" y="44" width="6" height="6"/>
+                <rect x="24" y="48" width="8" height="8"/>
+                <rect x="44" y="52" width="12" height="12"/>
+                <rect x="68" y="44" width="6" height="6"/>
+                <rect x="80" y="48" width="8" height="8"/>
+                <rect x="66" y="66" width="8" height="8"/>
+                <rect x="78" y="66" width="12" height="6"/>
+                <rect x="66" y="78" width="6" height="12"/>
+                <rect x="78" y="80" width="10" height="10"/>
+                <circle cx="50" cy="50" r="8" fill="#db2777"/>
+                <text x="50" y="53" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">₹</text>
+              </svg>
+              <div class="pg-apps-row">
+                <span class="pg-app-pill">GPay</span>
+                <span class="pg-app-pill">PhonePe</span>
+                <span class="pg-app-pill">Paytm</span>
+                <span class="pg-app-pill">BHIM</span>
+              </div>
+            </div>
+            <div class="pg-input-group">
+              <label>Or enter your UPI ID</label>
+              <input type="text" id="upiIdInput" placeholder="yourname@okaxis" value="student@okhdfcbank" />
+            </div>
+          </div>
+
+          <!-- Card Tab -->
+          <div class="pg-tab-pane" id="pane-card">
+            <button type="button" class="pg-quick-autofill" id="autofillCardBtn">
+              ⚡ Click to Auto-fill Demo Card
+            </button>
+            <div class="pg-card-form">
+              <div class="pg-input-group">
+                <label>Card Number</label>
+                <input type="text" id="cardNumInput" placeholder="4532 8821 9912 3456" maxlength="19" />
+              </div>
+              <div class="pg-row-2">
+                <div class="pg-input-group">
+                  <label>Expiry (MM/YY)</label>
+                  <input type="text" id="cardExpInput" placeholder="12/28" maxlength="5" />
+                </div>
+                <div class="pg-input-group">
+                  <label>CVV</label>
+                  <input type="password" id="cardCvvInput" placeholder="•••" maxlength="4" />
+                </div>
+              </div>
+              <div class="pg-input-group">
+                <label>Cardholder Name</label>
+                <input type="text" id="cardNameInput" placeholder="Name as on card" value="Student Demo" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Net Banking Tab -->
+          <div class="pg-tab-pane" id="pane-netbanking">
+            <p style="margin:0 0 0.8rem; font-size:0.85rem; font-weight:600; color:#475569;">Select Your Bank</p>
+            <div class="pg-banks-grid">
+              <button type="button" class="pg-bank-btn selected">HDFC Bank</button>
+              <button type="button" class="pg-bank-btn">SBI</button>
+              <button type="button" class="pg-bank-btn">ICICI Bank</button>
+              <button type="button" class="pg-bank-btn">Axis Bank</button>
+              <button type="button" class="pg-bank-btn">Kotak</button>
+              <button type="button" class="pg-bank-btn">PNB</button>
+            </div>
+            <p style="font-size:0.8rem; color:#64748b; margin:0;">You will be redirected to simulated bank authorization.</p>
+          </div>
+
+          <!-- COD Tab -->
+          <div class="pg-tab-pane" id="pane-cod">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:1.5rem; text-align:center;">
+              <span style="font-size:2.5rem; display:block; margin-bottom:0.5rem;">💵</span>
+              <h4 style="margin:0 0 0.4rem; color:#0f172a;">Cash on Delivery</h4>
+              <p style="margin:0; font-size:0.88rem; color:#64748b;">Pay in cash or with any UPI app when your package arrives at your doorstep.</p>
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <button type="button" class="pg-pay-btn" id="pgConfirmPayBtn">
+            <span>🔒</span> <span id="pgPayBtnText">Pay Now</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Realistic Banking Processing Overlay -->
+      <div class="pg-processing-overlay hidden" id="pgProcessingOverlay">
+        <div class="pg-spinner" id="pgSpinner"></div>
+        <div id="pgSuccessIcon" style="display:none; font-size:3.5rem; margin-bottom:0.8rem;">✅</div>
+        <h4 class="pg-processing-title" id="pgProcessingTitle">Connecting with Bank...</h4>
+        <p class="pg-processing-desc" id="pgProcessingDesc">Please do not refresh or press back.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success modal shown after order placed -->
+  <div class="checkout-modal hidden" id="successModal">
+    <div class="checkout-modal-box" style="max-width: 480px; text-align: center;">
+      <div class="checkout-success-icon">🎉</div>
+      <h3 style="color:#16a34a; margin-bottom:0.4rem;">Order Placed Successfully!</h3>
+      <p style="color:#475569; margin-bottom:1.2rem;">
+        Your payment was processed and your order has been confirmed.
+      </p>
+
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:1rem; margin-bottom:1.4rem; text-align:left; font-size:0.88rem;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="color:#64748b;">Order ID:</span>
+          <strong id="successOrderId" style="font-family:monospace;"></strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="color:#64748b;">Payment Status:</span>
+          <span id="successPaymentStatus" style="background:#e6f9ed; color:#167a39; padding:2px 8px; border-radius:10px; font-weight:700; font-size:0.8rem;">PAID</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem;" id="successTxnRow">
+          <span style="color:#64748b;">Transaction ID:</span>
+          <strong id="successTxnId" style="font-family:monospace; color:#db2777;"></strong>
+        </div>
+        <div style="border-top:1px dashed #cbd5e1; padding-top:0.6rem; margin-top:0.6rem; color:#1e293b;">
+          📧 <strong>Email Notification:</strong> A confirmation email with product details and invoice has been sent to your registered email!
+        </div>
+      </div>
+
+      <div style="display:flex; gap:0.8rem;">
+        <a href="orders.html" class="primary-btn" style="flex:1;">View My Orders</a>
+        <a href="shop.html" class="soft-btn" style="flex:1;">Continue Shopping</a>
+      </div>
+    </div>
+  </div>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Cosmos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="auth-shell" style="min-height:100vh; display:grid; grid-template-columns:1.1fr 0.9fr; gap:2rem; align-items:center; padding:3rem 7vw;">
+    <section class="auth-hero">
+      <p class="eyebrow" style="color:var(--primary); font-weight:800; letter-spacing:0.12em; text-transform:uppercase; font-size:0.78rem;">COSMOS</p>
+      <h1 style="margin:0; font-size:clamp(2.2rem, 5vw, 4.6rem); line-height:1; letter-spacing:-0.05em;">Welcome back to your universe of style.</h1>
+      <p style="margin:1.4rem 0; color:var(--muted); font-size:1.05rem; line-height:1.8; max-width:520px;">Log in to pick up your wishlist, track orders, and keep shopping fashion & beauty picked for you.</p>
+    </section>
+
+    <section class="auth-card">
+      <div class="brand-row" style="display:flex; align-items:center; gap:1rem;">
+        <img src="../../assets/images/logo.svg" alt="Cosmos Logo" style="height:75px; width:auto; display:block;" />
+        <div>
+          <h2 style="margin:0;">Welcome Back</h2>
+          <p style="margin:0.25rem 0 0; color:var(--muted);">Login to continue shopping.</p>
+        </div>
+      </div>
+
+      <form id="loginForm" class="stack" style="margin-top:1.5rem;">
+        <label>Email
+          <input type="email" name="email" placeholder="you@example.com" required />
+        </label>
+        <label>Password
+          <input type="password" name="password" placeholder="Minimum 6 characters" required />
+        </label>
+        <div style="display:flex; justify-content:flex-end; margin-top:-0.4rem; margin-bottom:0.6rem;">
+          <a href="#" id="openForgotModal" style="font-size:0.83rem; color:var(--primary); text-decoration:none; font-weight:700;">Forgot password?</a>
+        </div>
+        <div id="loginError" class="hidden" style="color:var(--danger); font-weight:700; font-size:0.85rem;"></div>
+        <button type="submit" class="primary-btn">Login</button>
+      </form>
+
+      <button class="link-btn" style="width:100%; margin-top:1rem;" onclick="window.location.href='register.html'">
+        Don't have an account? Register
+      </button>
+    </section>
+  </main>
+
+  <!-- User Forgot Password Modal -->
+  <div class="auth-modal-overlay hidden" id="forgotModal">
+    <div class="auth-modal-box">
+      <button type="button" class="auth-modal-close" id="closeForgotModal">&times;</button>
+      <div class="auth-modal-icon">🔐</div>
+      <h3 class="auth-modal-title">Reset Your Password</h3>
+      <p class="auth-modal-desc">
+        Enter your registered email address and we will send a 6-digit OTP to reset your password.
+      </p>
+
+      <!-- Step 1: Send OTP -->
+      <form id="forgotStep1Form" class="stack">
+        <label style="text-align:left; font-size:0.85rem; font-weight:600;">Registered Email
+          <input type="email" id="forgotEmailInput" placeholder="you@example.com" required />
+        </label>
+        <div id="forgotStep1Error" class="hidden" style="color:var(--danger); font-weight:700; font-size:0.85rem;"></div>
+        <button type="submit" id="sendForgotOtpBtn" class="primary-btn" style="margin-top:0.5rem;">Send 6-Digit OTP</button>
+      </form>
+
+      <!-- Step 2: Verify OTP & Set New Password -->
+      <form id="forgotStep2Form" class="stack hidden">
+        <div style="background:#fdf2f8; border:1px solid #fbcfe8; border-radius:10px; padding:0.8rem; margin-bottom:0.8rem; font-size:0.82rem; color:#9d174d;">
+          OTP sent to <strong id="forgotOtpSentEmail"></strong>
+        </div>
+        <label style="text-align:left; font-size:0.85rem; font-weight:600;">Enter 6-Digit OTP
+          <input type="text" id="forgotOtpInput" class="otp-input-field" maxlength="6" placeholder="••••••" required />
+        </label>
+        <label style="text-align:left; font-size:0.85rem; font-weight:600;">New Password
+          <input type="password" id="forgotNewPasswordInput" placeholder="Minimum 6 characters" required minlength="6" />
+        </label>
+        <div id="forgotStep2Error" class="hidden" style="color:var(--danger); font-weight:700; font-size:0.85rem;"></div>
+        <button type="submit" id="resetPasswordBtn" class="primary-btn" style="margin-top:0.5rem;">Reset Password</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart — Cosmos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/shop.css" />
+  <style>
+    .cart-page-grid { display: grid; grid-template-columns: 1fr 340px; gap: 2rem; align-items: start; }
+    .cart-page-items { display: grid; gap: 1rem; }
+    .cart-summary-row { display: flex; justify-content: space-between; padding: 0.5rem 0; color: var(--muted); }
+    .cart-summary-total { display: flex; justify-content: space-between; padding-top: 0.8rem; margin-top: 0.6rem; border-top: 1px solid var(--line); font-size: 1.15rem; font-weight: 800; }
+    @media (max-width: 860px) { .cart-page-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="page-main">
+    <div class="container">
+      <div class="section-heading">
+        <h2>My Cart</h2>
+        <p>Review your items before checkout.</p>
+      </div>
+
+      <div class="cart-page-grid">
+        <div class="cart-page-items" id="cartItemsList">
+          <!-- populated in Phase 6 from localStorage/backend cart -->
+        </div>
+
+        <div class="panel">
+          <h3 style="margin-top:0;">Order Summary</h3>
+          <div class="cart-summary-row"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
+          <!-- Coupon Box -->
+          <div style="margin: 1rem 0; padding: 0.8rem; background: var(--soft); border-radius: 12px; border: 1px dashed var(--primary-light);">
+            <div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.4rem; display:flex; justify-content:space-between; align-items:center;">
+              <span>🎟️ Apply Coupon</span>
+              <span id="couponHint" style="font-size: 0.72rem; color: var(--primary); cursor: pointer;" title="Click to fill">Use COSMOS20</span>
+            </div>
+            <div style="display: flex; gap: 0.4rem;">
+              <input type="text" id="couponInput" placeholder="Enter code (e.g. COSMOS20)" style="flex: 1; padding: 0.45rem 0.7rem; font-size: 0.85rem; text-transform: uppercase; border-radius: 8px; border: 1px solid var(--line);" />
+              <button type="button" class="primary-btn" id="applyCouponBtn" style="padding: 0.45rem 0.9rem; font-size: 0.82rem; width: auto;">Apply</button>
+            </div>
+            <div id="appliedCouponInfo" class="hidden" style="margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--success); font-weight: 700;">
+              <span id="couponSuccessMsg">✓ Code Applied</span>
+              <button type="button" id="removeCouponBtn" style="background: none; border: none; color: var(--danger); font-size: 0.78rem; cursor: pointer; text-decoration: underline;">Remove</button>
+            </div>
+          </div>
+
+          <div class="cart-summary-row hidden" id="cartDiscountRow" style="color: var(--success); font-weight: 700;">
+            <span>Discount (<span id="discountCodeLabel"></span>)</span>
+            <span id="cartDiscount">-₹0</span>
+          </div>
+
+          <div class="cart-summary-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+          <a href="checkout.html" class="primary-btn" style="display:block; text-align:center; margin-top:1.2rem;">Proceed to Checkout</a>
+        </div>
+      </div>
+
+      <div class="empty-state hidden" id="emptyState">
+        <div class="icon">🛍</div>
+        <p>Your cart is empty.</p>
+        <a href="shop.html" class="primary-btn" style="display:inline-block; margin-top:1rem;">Browse Products</a>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>

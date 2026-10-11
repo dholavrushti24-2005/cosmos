@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile — Cosmos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/shop.css" />
+  <style>
+    .profile-grid { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; align-items: start; }
+    .profile-avatar { width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 800; margin: 0 auto 1rem; }
+    @media (max-width: 800px) { .profile-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="page-main">
+    <div class="container">
+      <div class="section-heading">
+        <h2>My Profile</h2>
+        <p>Manage your account details.</p>
+      </div>
+
+      <div class="profile-grid">
+        <div class="panel" style="text-align:center;">
+          <div class="profile-avatar" id="profileAvatar">U</div>
+          <h3 id="profileName" style="margin:0.2rem 0;">—</h3>
+          <p style="color:var(--muted); margin:0 0 1.2rem;" id="profileEmail">—</p>
+          <div style="display:flex; flex-direction:column; gap:0.8rem;">
+            <button class="primary-btn" onclick="window.location.href='orders.html'" style="width:100%;">Product History</button>
+            <button class="danger-btn" id="logoutBtn" style="width:100%;">Logout</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 style="margin-top:0;">Account Details</h3>
+          <form id="profileForm" class="stack">
+            <div class="two-cols">
+              <label>Full Name
+                <input type="text" name="name" required />
+              </label>
+              <label>Email
+                <input type="email" name="email" disabled />
+              </label>
+            </div>
+            <label>Phone
+              <input type="tel" name="phone" />
+            </label>
+            <div class="two-cols">
+              <label>City
+                <input type="text" name="city" />
+              </label>
+              <label>Pincode
+                <input type="text" name="pincode" />
+              </label>
+            </div>
+            <label>Address
+              <textarea name="address" placeholder="Your delivery address"></textarea>
+            </label>
+            <button type="submit" class="primary-btn" style="justify-self:start;">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

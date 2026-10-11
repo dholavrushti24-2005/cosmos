@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cosmos — Everyday Luxury Clothes, Fashion & Beauty</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/shop.css" />
+  <style>
+    /* Dedicated Landing Page Styling */
+    .top-announcement {
+      background: linear-gradient(90deg, #ec4899, #a855f7);
+      color: #fff;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .landing-hero {
+      background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 50%, #e8eaf6 100%);
+      border-radius: 28px;
+      padding: 4rem 3rem;
+      margin-bottom: 3rem;
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(141, 69, 255, 0.08);
+    }
+    .landing-hero-content {
+      max-width: 650px;
+    }
+    .landing-hero h1 {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin: 0.4rem 0 1rem;
+      background: linear-gradient(135deg, var(--text), var(--primary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .landing-hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .landing-cta-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .about-cosmos-section {
+      background: linear-gradient(135deg, rgba(249, 235, 255, 0.75) 0%, rgba(255, 224, 240, 0.75) 100%);
+      border-radius: 24px;
+      padding: 3.5rem 2.5rem;
+      margin: 3.5rem 0;
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 35px rgba(141, 69, 255, 0.06);
+    }
+    .about-cosmos-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .about-cosmos-text h2 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .about-cosmos-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .about-stats {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1.8rem;
+    }
+    .stat-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 1.2rem 1.6rem;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      text-align: center;
+      flex: 1;
+      min-width: 110px;
+    }
+    .stat-card .num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .stat-card .lbl {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+
+    .features-banner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    .feature-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 1.8rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      transition: all 0.25s ease;
+    }
+    .feature-box:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 15px 35px rgba(141, 69, 255, 0.1);
+    }
+    .feature-icon {
+      font-size: 2.4rem;
+      background: var(--soft);
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .feature-info h4 {
+      margin: 0 0 0.2rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .feature-info p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .platform-tech-section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      margin: 3.5rem 0;
+    }
+    .platform-tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.8rem;
+    }
+    .tech-card {
+      background: var(--soft);
+      border-radius: 16px;
+      padding: 1.4rem;
+      border: 1px solid var(--line);
+    }
+    .tech-card h5 {
+      margin: 0 0 0.4rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+    .tech-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .newsletter-section {
+      background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+      color: #fff;
+      border-radius: 24px;
+      padding: 3.5rem 2.5rem;
+      margin: 3.5rem 0;
+      text-align: center;
+    }
+    .newsletter-section h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin: 0 0 0.6rem;
+    }
+    .newsletter-section p {
+      color: #9ca3af;
+      max-width: 500px;
+      margin: 0 auto 1.8rem;
+      font-size: 0.95rem;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 0.8rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      background: #111827;
+      color: #fff;
+    }
+
+    @media (max-width: 850px) {
+      .about-cosmos-grid { grid-template-columns: 1fr; }
+      .landing-hero { padding: 2.5rem 1.8rem; }
+      .newsletter-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="top-announcement">
+    🌸 Free Express Delivery on orders above ₹999 | Cash on Delivery (COD) Available Nationwide!
+  </div>
+
+  <header id="site-header"></header>
+
+  <main class="page-main">
+    <div class="container">
+
+      <!-- Landing Page Hero -->
+      <div class="landing-hero">
+        <div class="landing-hero-content">
+          <span class="eyebrow" style="background:var(--soft); color:var(--primary); padding:0.4rem 1rem; border-radius:999px; font-weight:700; font-size:0.8rem;">✨ COSMOS BOUTIQUE LANDING</span>
+          <h1>Everyday Clothes, Fashion & Beauty Essentials</h1>
+          <p>Welcome to Cosmos — your ultimate online destination for handpicked clothing, trending dresses, kurtis, skincare serums, and boutique designer wear.</p>
+          <div class="landing-cta-group">
+            <a href="home.html" class="primary-btn" style="padding:0.85rem 1.8rem; font-size:0.95rem;">Enter Store Catalog 🛍️</a>
+            <a href="clothes.html" class="ghost-btn" style="padding:0.85rem 1.8rem; font-size:0.95rem;">Browse Clothes Collection 👗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Cosmos Story & Real Details -->
+      <section class="about-cosmos-section" id="aboutCosmosSection">
+        <div class="about-cosmos-grid">
+          <div class="about-cosmos-text">
+            <h2>About COSMOS</h2>
+            <p>Cosmos is your ultimate online fashion and beauty sanctuary. We blend effortless streetwear, festive traditional clothing, high-performance skincare, and cruelty-free makeup into one seamless shopping experience.</p>
+            <p>Whether you're looking for trendy denim jackets, soft pastel wrap dresses, artisanal cotton kurtis, or glowing hyaluronic face serums — Cosmos brings you verified quality, affordable luxury, and rapid doorstep delivery.</p>
+            
+            <div class="about-stats">
+              <div class="stat-card">
+                <div class="num">100%</div>
+                <div class="lbl">Authentic</div>
+              </div>
+              <div class="stat-card">
+                <div class="num">500+</div>
+                <div class="lbl">Styles</div>
+              </div>
+              <div class="stat-card">
+                <div class="num">⚡ 24h</div>
+                <div class="lbl">Dispatch</div>
+              </div>
+              <div class="stat-card">
+                <div class="num">4.9 ★</div>
+                <div class="lbl">Rating</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align:center;">
+            <div style="background:var(--panel); border:1px solid var(--line); border-radius:22px; padding:2.2rem 1.8rem; box-shadow:0 12px 35px rgba(0,0,0,0.04);">
+              <div style="font-size:3.8rem; margin-bottom:1rem;">🛍️👗💄</div>
+              <h3 style="margin:0 0 0.6rem; font-size:1.35rem; font-weight:800;">Curated Boutique Partners</h3>
+              <p style="color:var(--muted); font-size:0.9rem; line-height:1.6; margin:0 0 1.2rem;">Explore top rated brands including Luna Threads, Glow & Co., Petal Studio, and Bloom Beauty.</p>
+              <a href="home.html" class="primary-btn" style="padding:0.6rem 1.2rem; font-size:0.85rem;">Explore Full Catalog →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Collections Showcase -->
+      <div class="section-heading">
+        <h2>Explore Collections</h2>
+        <p>Browse our core departments for clothing, fashion, skincare, and boutique labels.</p>
+      </div>
+      <div class="brand-grid" style="margin-bottom:3.5rem;">
+        <a href="clothes.html" class="brand-card">
+          <div style="font-size:2.6rem; margin-bottom:0.5rem;">👗</div>
+          <h4>Clothes & Apparel</h4>
+          <p>Dresses, kurtis, denim jackets, satin skirts & everyday wear</p>
+        </a>
+        <a href="fashion.html" class="brand-card">
+          <div style="font-size:2.6rem; margin-bottom:0.5rem;">👠</div>
+          <h4>Fashion</h4>
+          <p>Purses, heels, sandals, clutches & sunglasses</p>
+        </a>
+        <a href="jewellery.html" class="brand-card">
+          <div style="font-size:2.6rem; margin-bottom:0.5rem;">💎</div>
+          <h4>Jewellery Collection</h4>
+          <p>Gold choker necklaces, pearl earrings, charm bracelets & rings</p>
+        </a>
+        <a href="beauty.html" class="brand-card">
+          <div style="font-size:2.6rem; margin-bottom:0.5rem;">💄</div>
+          <h4>Beauty & Skincare</h4>
+          <p>Hyaluronic serums, rose clay masks, kajal & lipstick sets</p>
+        </a>
+      </div>
+
+      <!-- Why Choose Cosmos -->
+      <div class="section-heading">
+        <h2>Why Shop With Us</h2>
+        <p>Every order comes with our commitment to quality, transparency, and service.</p>
+      </div>
+      <div class="features-banner">
+        <div class="feature-box">
+          <div class="feature-icon">✨</div>
+          <div class="feature-info">
+            <h4>100% Genuine Quality</h4>
+            <p>Direct partnership with certified boutique fashion designers & skin labs.</p>
+          </div>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon">🎥</div>
+          <div class="feature-info">
+            <h4>HD Image & Video Previews</h4>
+            <p>Interactive multi-photo gallery & video playback previews for every item.</p>
+          </div>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon">🚀</div>
+          <div class="feature-info">
+            <h4>Express Dispatch</h4>
+            <p>Fast 24-hour order dispatch with real-time tracking updates.</p>
+          </div>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon">🔒</div>
+          <div class="feature-info">
+            <h4>COD & Safe Checkout</h4>
+            <p>Cash on Delivery options nationwide & safe encrypted checkout.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platform Tech Specs & Transparency -->
+      <section class="platform-tech-section">
+        <div class="section-heading" style="margin-bottom:1.2rem;">
+          <h2>Cosmos E-Commerce Platform Details</h2>
+          <p>Real platform architecture and backend details built for full transparency.</p>
+        </div>
+        <div class="platform-tech-grid">
+          <div class="tech-card">
+            <h5>⚡ Express Node.js Engine</h5>
+            <p>Powered by a fast, non-blocking Node.js & Express REST API server providing instant response times.</p>
+          </div>
+          <div class="tech-card">
+            <h5>📸 Multer Media Management</h5>
+            <p>Supports multi-image upload & HD Video file storage (.mp4, .webm) saved directly to local static assets.</p>
+          </div>
+          <div class="tech-card">
+            <h5>🔐 JWT Auth & Security</h5>
+            <p>Secure bcrypt password hashing and JSON Web Tokens for guest & admin session authentication.</p>
+          </div>
+          <div class="tech-card">
+            <h5>🛍️ Admin Control Dashboard</h5>
+            <p>Dedicated admin workspace at <code>/admin/products.html</code> to add, edit, change, and delete product media.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Site Reviews Section -->
+      <section class="site-reviews-section" style="margin: 3.5rem 0;">
+        <div class="section-heading" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+          <div>
+            <h2>What Our Customers Say</h2>
+            <p>Real reviews from the Cosmos community.</p>
+          </div>
+          <button class="primary-btn" id="writeSiteReviewBtn">Leave a Review</button>
+        </div>
+        
+        <div id="siteReviewsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+          <!-- Reviews will be populated here -->
+          <div class="stat-card" style="text-align: left; opacity: 0.7;">Loading reviews...</div>
+        </div>
+
+        <div class="empty-state hidden" id="siteReviewsEmpty" style="margin-top: 2rem;">
+          <div class="icon">💬</div>
+          <p>Be the first to review Cosmos!</p>
+        </div>
+      </section>
+
+      <!-- Write Site Review Modal -->
+      <div class="checkout-modal hidden" id="siteReviewModal">
+        <div class="checkout-modal-box">
+          <button class="cart-close" id="closeSiteReviewModal">✕</button>
+          <h3 style="margin-top:0;">Write a Review</h3>
+          <form id="siteReviewForm" class="stack" style="margin-top:1.5rem;">
+            <label>Rating (1-5)
+              <select name="rating" required>
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Very Good</option>
+                <option value="3">3 - Average</option>
+                <option value="2">2 - Poor</option>
+                <option value="1">1 - Terrible</option>
+              </select>
+            </label>
+            <label>Your Comment
+              <textarea name="comment" rows="4" placeholder="Share your experience with Cosmos..." required></textarea>
+            </label>
+            <button type="submit" class="primary-btn">Submit Review</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="newsletter-section">
+        <h3>Stay In The Cosmos Loop</h3>
+        <p>Subscribe to receive instant updates on new cloth drops, beauty releases, and exclusive boutique discounts.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to Cosmos!');">
+          <input type="email" placeholder="Enter your email address..." required />
+          <button type="submit" class="primary-btn" style="border-radius:999px; padding:0.8rem 1.6rem;">Subscribe</button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/site-reviews.js"></script>
+</body>
+</html>

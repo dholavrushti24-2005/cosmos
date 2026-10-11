@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — Cosmos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="auth-shell" style="min-height:100vh; display:grid; grid-template-columns:1.1fr 0.9fr; gap:2rem; align-items:center; padding:3rem 7vw;">
+    <section class="auth-hero">
+      <p class="eyebrow" style="color:var(--primary); font-weight:800; letter-spacing:0.12em; text-transform:uppercase; font-size:0.78rem;">COSMOS</p>
+      <h1 style="margin:0; font-size:clamp(2.2rem, 5vw, 4.6rem); line-height:1; letter-spacing:-0.05em;">Fashion & beauty, made for you.</h1>
+      <p style="margin:1.4rem 0; color:var(--muted); font-size:1.05rem; line-height:1.8; max-width:520px;">Create your account to save favorites, checkout faster, and track every order in one place.</p>
+    </section>
+
+    <section class="auth-card">
+      <div class="brand-row" style="display:flex; align-items:center; gap:1rem;">
+        <img src="../../assets/images/logo.svg" alt="Cosmos Logo" style="height:75px; width:auto; display:block;" />
+        <div>
+          <h2 style="margin:0;">Create Account</h2>
+          <p style="margin:0.25rem 0 0; color:var(--muted);">Start your Cosmos journey.</p>
+        </div>
+      </div>
+
+      <form id="registerForm" class="stack" style="margin-top:1.5rem;">
+        <label>Full Name
+          <input type="text" name="name" placeholder="Your name" required />
+        </label>
+        <label>Email
+          <input type="email" name="email" placeholder="you@example.com" required />
+        </label>
+        <label>Password
+          <input type="password" name="password" placeholder="Minimum 6 characters" required minlength="6" />
+        </label>
+        <label>Phone
+          <input type="tel" name="phone" placeholder="10-digit number" />
+        </label>
+        <div id="registerError" class="hidden" style="color:var(--danger); font-weight:700; font-size:0.85rem;"></div>
+        <button type="submit" class="primary-btn">Create Account</button>
+      </form>
+
+      <button class="link-btn" style="width:100%; margin-top:1rem;" onclick="window.location.href='login.html'">
+        Already have an account? Login
+      </button>
+    </section>
+  </main>
+
+  <!-- Registration OTP Verification Modal -->
+  <div class="auth-modal-overlay hidden" id="otpModal">
+    <div class="auth-modal-box">
+      <button type="button" class="auth-modal-close" id="closeOtpModal">&times;</button>
+      <div class="auth-modal-icon">✉️</div>
+      <h3 class="auth-modal-title">Verify Your Email</h3>
+      <p class="auth-modal-desc">
+        We sent a 6-digit verification code from <strong>moradiyazeel5@gmail.com</strong> to<br/>
+        <strong id="otpEmailDisplay" style="color:var(--primary-dark);"></strong>
+      </p>
+
+      <form id="verifyOtpForm" class="stack">
+        <label style="text-align:left; font-size:0.85rem; font-weight:600;">Enter 6-Digit OTP Code
+          <input type="text" id="otpInput" class="otp-input-field" maxlength="6" placeholder="••••••" required autofocus />
+        </label>
+        <div id="otpError" class="hidden" style="color:var(--danger); font-weight:700; font-size:0.85rem;"></div>
+        <button type="submit" id="verifyOtpBtn" class="primary-btn" style="margin-top:0.6rem;">Verify & Complete Registration</button>
+      </form>
+
+      <p style="margin-top:1.2rem; font-size:0.82rem; color:var(--muted);">
+        Didn't receive the email? <button type="button" id="resendOtpBtn" style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer; padding:0;">Resend OTP</button>
+      </p>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

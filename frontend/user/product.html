@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — Cosmos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/shop.css" />
+  <style>
+    .pd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 3rem; }
+    .pd-image { background: linear-gradient(135deg, #f9ebff, #ffe8f4); border-radius: var(--radius); min-height: 420px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .pd-image img { width: 100%; height: 100%; object-fit: cover; }
+    .pd-info h1 { margin: 0 0 0.4rem; font-size: 1.9rem; letter-spacing: -0.02em; }
+    .pd-price { font-size: 1.7rem; font-weight: 800; color: var(--primary-dark); margin: 0.6rem 0; }
+    .pd-price .original { font-size: 1rem; font-weight: 500; color: var(--muted); text-decoration: line-through; margin-right: 0.5rem; }
+    .pd-desc { color: var(--muted); line-height: 1.8; margin-bottom: 1.4rem; }
+    .pd-actions { display: flex; gap: 0.8rem; margin-top: 1.4rem; flex-wrap: wrap; }
+    @media (max-width: 800px) { .pd-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="page-main">
+    <div class="container">
+      <div class="pd-grid" id="productDetail">
+        <div class="pd-media-gallery" id="pdGalleryWrap">
+          <div class="pd-main-viewer" id="pdMainViewer"><span class="product-emoji-fallback">🛍️</span></div>
+          <div class="pd-thumbs-row" id="pdThumbsRow"></div>
+        </div>
+        <div class="pd-info">
+          <span class="product-category-tag" id="pdCategory">—</span>
+          <h1 id="pdName">Loading product…</h1>
+          <div class="pd-price" id="pdPrice"></div>
+          <p class="pd-desc" id="pdDesc"></p>
+
+          <!-- Interactive Size Selector -->
+          <div class="pd-size-wrap hidden" id="pdSizeWrap">
+            <div class="pd-size-header">
+              <span class="pd-size-label">Select Size: <span class="pd-size-current" id="pdSelectedSizeLabel"></span></span>
+              <button type="button" class="size-guide-btn" id="sizeGuideBtn">📏 Size Chart</button>
+            </div>
+            <div class="pd-sizes-list" id="pdSizesList"></div>
+          </div>
+
+          <div class="pd-actions">
+            <button class="primary-btn" id="pdAddToCart">Add to Cart</button>
+            <button class="ghost-btn" id="pdAddToWishlist">♡ Wishlist</button>
+          </div>
+          <div class="pd-policies" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); display: grid; gap: 0.8rem;">
+            <div style="display:flex; align-items:center; gap:0.6rem; color:var(--text); font-size:0.9rem;">
+              <span style="font-size:1.2rem;">🔄</span> <strong>7 Days Return Policy</strong> (Easy returns for delivered items)
+            </div>
+            <div style="display:flex; align-items:center; gap:0.6rem; color:var(--text); font-size:0.9rem;">
+              <span style="font-size:1.2rem;">💸</span> <strong>Instant Refunds</strong> (Processed within 5-7 working days)
+            </div>
+            <div style="display:flex; align-items:center; gap:0.6rem; color:var(--text); font-size:0.9rem;">
+              <span style="font-size:1.2rem;">❌</span> <strong>Easy Cancellation</strong> (Cancel anytime before dispatch)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Reviews Section -->
+      <section class="product-reviews-section" style="margin: 3.5rem 0;">
+        <div class="section-heading" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+          <div>
+            <h2>Customer Reviews</h2>
+            <p id="productReviewStats">Average Rating: — | Total Reviews: 0</p>
+          </div>
+          <button class="primary-btn" id="writeProductReviewBtn">Write a Review</button>
+        </div>
+        
+        <div id="productReviewsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+          <!-- Reviews will be populated here -->
+          <div class="stat-card" style="text-align: left; opacity: 0.7;">Loading reviews...</div>
+        </div>
+
+        <div class="empty-state hidden" id="productReviewsEmpty" style="margin-top: 2rem;">
+          <div class="icon">💬</div>
+          <p>No reviews yet. Be the first to review this product!</p>
+        </div>
+      </section>
+
+      <!-- Write Product Review Modal -->
+      <div class="checkout-modal hidden" id="productReviewModal">
+        <div class="checkout-modal-box">
+          <button class="cart-close" id="closeProductReviewModal">✕</button>
+          <h3 style="margin-top:0;">Write a Review</h3>
+          <form id="productReviewForm" class="stack" style="margin-top:1.5rem;">
+            <label>Rating (1-5)
+              <select name="rating" required>
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Very Good</option>
+                <option value="3">3 - Average</option>
+                <option value="2">2 - Poor</option>
+                <option value="1">1 - Terrible</option>
+              </select>
+            </label>
+            <label>Your Comment
+              <textarea name="comment" rows="4" placeholder="What did you like or dislike about this product?" required></textarea>
+            </label>
+            <button type="submit" class="primary-btn">Submit Review</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <h2>You may also like</h2>
+      </div>
+      <div class="product-grid" id="relatedGrid"></div>
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/product-card.js"></script>
+  <script src="js/product.js"></script>
+</body>
+</html>

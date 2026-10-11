@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Catalog — Cosmos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/shop.css" />
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="page-main">
+    <div class="container">
+      
+
+      <div class="section-heading">
+        <h2>All Store Products</h2>
+        <p>Explore every product available in our store with real-time search and category filtering.</p>
+      </div>
+
+      <div class="boutique-filter-bar">
+        <button class="boutique-filter active" data-filter="all">All Products</button>
+        <button class="boutique-filter" data-filter="clothes">Clothes 👗</button>
+        <button class="boutique-filter" data-filter="fashion">Fashion & Shoes 👠</button>
+        <button class="boutique-filter" data-filter="jewellery">Jewellery 💎</button>
+        <button class="boutique-filter" data-filter="beauty">Beauty & Skincare 💄</button>
+        <div class="search-box">
+          <input type="search" id="homeSearchInput" placeholder="Search clothes, shoes, jewellery, beauty..." />
+        </div>
+      </div>
+
+      <div class="product-grid" id="featuredGrid">
+        <!-- populated from backend/products -->
+      </div>
+
+      <div class="empty-state hidden" id="emptyState">
+        <div class="icon">🔍</div>
+        <p>No products found. Try a different search or filter.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/product-card.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>
