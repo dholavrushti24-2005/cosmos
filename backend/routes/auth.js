@@ -67,7 +67,7 @@ router.post('/send-register-otp', async (req, res) => {
       purpose: 'register',
     });
 
-    // Send email from moradiyazeel5@gmail.com
+    // Send email (if SMTP configured)
     sendOtpEmail({
       email: cleanEmail,
       name: name || 'Valued User',
@@ -75,7 +75,7 @@ router.post('/send-register-otp', async (req, res) => {
       purpose: 'register',
     });
 
-    res.json({ message: 'Verification OTP sent to your email.' });
+    res.json({ message: 'Verification OTP sent successfully.', otp });
   } catch (err) {
     console.error('Send register OTP error:', err);
     res.status(500).json({ message: 'Error sending verification OTP.' });
@@ -242,7 +242,7 @@ router.post('/forgot-password', async (req, res) => {
     account.resetPasswordExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
     await account.save();
 
-    // Send email from moradiyazeel5@gmail.com
+    // Send email (if SMTP configured)
     sendOtpEmail({
       email: cleanEmail,
       name: account.name,
@@ -250,7 +250,7 @@ router.post('/forgot-password', async (req, res) => {
       purpose: 'forgot_password',
     });
 
-    res.json({ message: 'Password reset OTP has been sent to your email.' });
+    res.json({ message: 'Password reset OTP sent successfully.', otp });
   } catch (err) {
     console.error('Forgot password error:', err);
     res.status(500).json({ message: 'Error initiating password reset.' });

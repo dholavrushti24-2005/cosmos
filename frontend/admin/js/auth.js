@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sendBtn.textContent = 'Sending OTP...';
 
         try {
-          await adminApi.post('/auth/forgot-password', {
+          const res = await adminApi.post('/auth/forgot-password', {
             email: adminForgotEmailTarget,
             role: 'admin',
           }, { auth: false });
@@ -87,6 +87,16 @@ document.addEventListener('DOMContentLoaded', () => {
           if (adminForgotOtpSentEmail) adminForgotOtpSentEmail.textContent = adminForgotEmailTarget;
           adminForgotStep1Form.classList.add('hidden');
           adminForgotStep2Form.classList.remove('hidden');
+
+          const adminForgotOtpDisplayBox = document.getElementById('adminForgotOtpDisplayBox');
+          const adminDisplayedForgotOtpCode = document.getElementById('adminDisplayedForgotOtpCode');
+          const adminForgotOtpInput = document.getElementById('adminForgotOtpInput');
+
+          if (res && res.otp) {
+            if (adminDisplayedForgotOtpCode) adminDisplayedForgotOtpCode.textContent = res.otp;
+            if (adminForgotOtpDisplayBox) adminForgotOtpDisplayBox.classList.remove('hidden');
+            if (adminForgotOtpInput) adminForgotOtpInput.value = res.otp;
+          }
         } catch (err) {
           adminForgotStep1Error.textContent = err.message;
           adminForgotStep1Error.classList.remove('hidden');

@@ -368,7 +368,7 @@ async function sendOtpEmail({ email, name, otp, purpose }) {
           </p>
         </div>
         <div class="footer">
-          <p>© ${new Date().getFullYear()} Cosmos E-Commerce. Sent securely from moradiyazeel5@gmail.com</p>
+          <p>© ${new Date().getFullYear()} Cosmos E-Commerce. Sent securely from ${process.env.EMAIL_USER || 'support@cosmos.com'}</p>
         </div>
       </div>
     </body>

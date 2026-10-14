@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         // Send OTP to email
-        await api.post('/auth/send-register-otp', {
+        const res = await api.post('/auth/send-register-otp', {
           email: pendingRegisterData.email,
           name: pendingRegisterData.name,
         }, { auth: false });
@@ -95,9 +95,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show OTP Modal
         if (otpEmailDisplay) otpEmailDisplay.textContent = pendingRegisterData.email;
         if (otpError) otpError.classList.add('hidden');
-        document.getElementById('otpInput').value = '';
+
+        const otpDisplayBox = document.getElementById('otpDisplayBox');
+        const displayedOtpCode = document.getElementById('displayedOtpCode');
+        const otpInput = document.getElementById('otpInput');
+
+        if (res && res.otp) {
+          if (displayedOtpCode) displayedOtpCode.textContent = res.otp;
+          if (otpDisplayBox) otpDisplayBox.classList.remove('hidden');
+          if (otpInput) otpInput.value = res.otp;
+          showToast(`Account Verification OTP: ${res.otp}`, 'info');
+        } else {
+          if (otpDisplayBox) otpDisplayBox.classList.add('hidden');
+          if (otpInput) otpInput.value = '';
+          showToast('Verification code sent to your email!', 'info');
+        }
+
         otpModal.classList.remove('hidden');
-        showToast('Verification code sent to your email!', 'info');
       } catch (err) {
         showFormError(errorBox, err.message);
       } finally {
@@ -149,11 +163,23 @@ document.addEventListener('DOMContentLoaded', () => {
         resendOtpBtn.textContent = 'Sending...';
 
         try {
-          await api.post('/auth/send-register-otp', {
+          const res = await api.post('/auth/send-register-otp', {
             email: pendingRegisterData.email,
             name: pendingRegisterData.name,
           }, { auth: false });
-          showToast('New OTP sent to your email!', 'info');
+
+          const otpDisplayBox = document.getElementById('otpDisplayBox');
+          const displayedOtpCode = document.getElementById('displayedOtpCode');
+          const otpInput = document.getElementById('otpInput');
+
+          if (res && res.otp) {
+            if (displayedOtpCode) displayedOtpCode.textContent = res.otp;
+            if (otpDisplayBox) otpDisplayBox.classList.remove('hidden');
+            if (otpInput) otpInput.value = res.otp;
+            showToast(`Account Verification OTP: ${res.otp}`, 'info');
+          } else {
+            showToast('New OTP sent to your email!', 'info');
+          }
         } catch (err) {
           showToast(err.message, 'error');
         } finally {
@@ -209,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sendBtn.textContent = 'Sending OTP...';
 
         try {
-          await api.post('/auth/forgot-password', {
+          const res = await api.post('/auth/forgot-password', {
             email: forgotEmailTarget,
             role: 'user',
           }, { auth: false });
@@ -217,7 +243,20 @@ document.addEventListener('DOMContentLoaded', () => {
           if (forgotOtpSentEmail) forgotOtpSentEmail.textContent = forgotEmailTarget;
           forgotStep1Form.classList.add('hidden');
           forgotStep2Form.classList.remove('hidden');
-          showToast('Password reset OTP sent to your email!', 'info');
+
+          const forgotOtpDisplayBox = document.getElementById('forgotOtpDisplayBox');
+          const displayedForgotOtpCode = document.getElementById('displayedForgotOtpCode');
+          const forgotOtpInput = document.getElementById('forgotOtpInput');
+
+          if (res && res.otp) {
+            if (displayedForgotOtpCode) displayedForgotOtpCode.textContent = res.otp;
+            if (forgotOtpDisplayBox) forgotOtpDisplayBox.classList.remove('hidden');
+            if (forgotOtpInput) forgotOtpInput.value = res.otp;
+            showToast(`Password Reset OTP: ${res.otp}`, 'info');
+          } else {
+            if (forgotOtpDisplayBox) forgotOtpDisplayBox.classList.add('hidden');
+            showToast('Password reset OTP sent to your email!', 'info');
+          }
         } catch (err) {
           showFormError(forgotStep1Error, err.message);
         } finally {

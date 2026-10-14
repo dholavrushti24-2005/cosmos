@@ -56,9 +56,14 @@
       <div class="auth-modal-icon">✉️</div>
       <h3 class="auth-modal-title">Verify Your Email</h3>
       <p class="auth-modal-desc">
-        We sent a 6-digit verification code from <strong>moradiyazeel5@gmail.com</strong> to<br/>
+        A 6-digit verification code has been sent to<br/>
         <strong id="otpEmailDisplay" style="color:var(--primary-dark);"></strong>
       </p>
+
+      <div id="otpDisplayBox" class="hidden" style="background:#fdf2f8; border:1.5px dashed #ec4899; border-radius:12px; padding:0.75rem 1rem; margin-bottom:1rem; text-align:center;">
+        <span style="font-size:0.78rem; color:#831843; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; display:block; margin-bottom:4px;">Account Verification OTP</span>
+        <span id="displayedOtpCode" style="font-size:1.8rem; font-weight:800; letter-spacing:6px; color:#be185d; font-family:monospace;"></span>
+      </div>
 
       <form id="verifyOtpForm" class="stack">
         <label style="text-align:left; font-size:0.85rem; font-weight:600;">Enter 6-Digit OTP Code
