@@ -30,21 +30,37 @@ app.use('/api/reviews', require('./routes/reviews'));
 
 // ---------- Health check ----------
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Cosmos backend running with MongoDB' });
+  const isMongoReady = mongoose.connection.readyState === 1;
+  res.json({
+    status: 'ok',
+    database: isMongoReady ? 'connected' : 'connecting',
+    message: isMongoReady ? 'Cosmos backend running with MongoDB' : 'Cosmos backend running, establishing MongoDB connection...'
+  });
 });
 
 async function startServer() {
+  // 1. Start HTTP server FIRST so Render port binding succeeds immediately!
+  app.listen(PORT, () => {
+    console.log(`Cosmos server running at http://localhost:${PORT}`);
+    console.log(`  User site:  http://localhost:${PORT}/`);
+    console.log(`  Admin site: http://localhost:${PORT}/admin/login.html`);
+  });
+
+  // 2. Connect to MongoDB with auto-retry
   try {
     await connectDB();
-    app.listen(PORT, () => {
-      console.log(`Cosmos server running at http://localhost:${PORT}`);
-      console.log(`  User site:  http://localhost:${PORT}/`);
-      console.log(`  Admin site: http://localhost:${PORT}/admin/login.html`);
-    });
   } catch (err) {
-    console.error('Failed to start server:', err);
-    process.exit(1);
+    console.warn('Initial MongoDB connection attempt deferred. Retrying in background...');
+    const retryInterval = setInterval(async () => {
+      try {
+        await connectDB();
+        clearInterval(retryInterval);
+      } catch (retryErr) {
+        // Will keep retrying in background
+      }
+    }, 5000);
   }
 }
 
 startServer();
+
