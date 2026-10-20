@@ -1,23 +1,24 @@
 // js/orders.js — Admin Orders management: list all orders, search, update status.
 
-const ORDER_STATUSES = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+const ORDER_STATUSES = ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'return_requested', 'refunded'];
 
 let allOrders = [];
 
 function orderRow(o) {
   const date = new Date(o.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-  const itemsSummary = o.items.map(i => `${i.name}${i.size ? ` <span style="color:#c77dff; font-weight:700;">[${i.size}]</span>` : ''} x${i.qty}`).join(', ');
-  const statusOptions = ORDER_STATUSES.map(s =>
-    `<option value="${s}" ${o.status === s ? 'selected' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</option>`
-  ).join('');
+  const itemsSummary = (o.items || []).map(i => `${i.name}${i.size ? ` <span style="color:#c77dff; font-weight:700;">[${i.size}]</span>` : ''} x${i.qty}`).join(', ');
+  const statusOptions = ORDER_STATUSES.map(s => {
+    const label = s.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    return `<option value="${s}" ${o.status === s ? 'selected' : ''}>${label}</option>`;
+  }).join('');
 
   return `
     <tr>
-      <td>#${o.id.slice(-8)}<br><span style="color:var(--muted); font-size:0.78rem;">${date}</span></td>
-      <td>${o.shipping.name}<br><span style="color:var(--muted); font-size:0.78rem;">${o.shipping.phone}</span></td>
+      <td>#${(o.id || '').slice(-8)}<br><span style="color:var(--muted); font-size:0.78rem;">${date}</span></td>
+      <td>${(o.shipping && o.shipping.name) || 'Customer'}<br><span style="color:var(--muted); font-size:0.78rem;">${(o.shipping && o.shipping.phone) || ''}</span></td>
       <td style="max-width:260px;">${itemsSummary}</td>
       <td>₹${o.total}</td>
-      <td style="text-transform:uppercase; font-size:0.78rem; color:var(--muted);">${o.payment}</td>
+      <td style="text-transform:uppercase; font-size:0.78rem; color:var(--muted);">${o.payment || 'cod'}</td>
       <td>
         <select class="status-select" data-order-id="${o.id}">
           ${statusOptions}
@@ -51,7 +52,7 @@ async function loadOrders() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  requireAdminAuth();
+  if (!requireAdminAuth()) return;
   renderAdminShell('Orders');
   loadOrders();
 
@@ -63,8 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const status = statusFilter ? statusFilter.value.toLowerCase() : 'all';
 
     const filtered = allOrders.filter(o => {
-      const matchesSearch = o.shipping.name.toLowerCase().includes(q) || o.id.toLowerCase().includes(q);
-      const matchesStatus = status === 'all' || o.status.toLowerCase() === status;
+      const customerName = (o.shipping && o.shipping.name) || '';
+      const orderId = o.id || '';
+      const matchesSearch = customerName.toLowerCase().includes(q) || orderId.toLowerCase().includes(q);
+      const matchesStatus = status === 'all' || (o.status || '').toLowerCase() === status;
       return matchesSearch && matchesStatus;
     });
     renderOrdersTable(filtered);

@@ -39,28 +39,28 @@
       "id": "brand_001",
       "name": "Luna Threads",
       "description": "Everyday fashion essentials with a soft, feminine touch.",
-      "logo": "/assets/brands/luna-threads.png",
+      "logo": "/assets/brands/luna-threads.svg",
       "category": "fashion"
     },
     {
       "id": "brand_002",
       "name": "Glow & Co.",
       "description": "Clean, skin-friendly beauty and skincare.",
-      "logo": "/assets/brands/glow-co.png",
+      "logo": "/assets/brands/glow-co.svg",
       "category": "beauty"
     },
     {
       "id": "brand_003",
       "name": "Petal Studio",
       "description": "Statement fashion pieces for every occasion.",
-      "logo": "/assets/brands/petal-studio.png",
+      "logo": "/assets/brands/petal-studio.svg",
       "category": "fashion"
     },
     {
       "id": "brand_004",
       "name": "Bloom Beauty",
       "description": "Makeup and beauty tools loved by Gen Z.",
-      "logo": "/assets/brands/bloom-beauty.png",
+      "logo": "/assets/brands/bloom-beauty.svg",
       "category": "beauty"
     }
   ],
@@ -91,9 +91,9 @@
       "originalPrice": null,
       "category": "clothes",
       "brandId": "brand_003",
-      "image": "/assets/products/denim-jacket.jpg",
+      "image": "/assets/products/denim-jacket.svg",
       "images": [
-        "/assets/products/denim-jacket.jpg"
+        "/assets/products/denim-jacket.svg"
       ],
       "videos": [],
       "badge": null,
@@ -107,9 +107,9 @@
       "originalPrice": 1399,
       "category": "clothes",
       "brandId": "brand_001",
-      "image": "/assets/products/embroidered-kurti.jpg",
+      "image": "/assets/products/embroidered-kurti.svg",
       "images": [
-        "/assets/products/embroidered-kurti.jpg"
+        "/assets/products/embroidered-kurti.svg"
       ],
       "videos": [],
       "badge": "Sale",
@@ -123,9 +123,9 @@
       "originalPrice": 799,
       "category": "beauty",
       "brandId": "brand_002",
-      "image": "/assets/products/hydra-glow-serum.jpg",
+      "image": "/assets/products/hydra-glow-serum.svg",
       "images": [
-        "/assets/products/hydra-glow-serum.jpg"
+        "/assets/products/hydra-glow-serum.svg"
       ],
       "videos": [],
       "badge": "Bestseller",
@@ -139,9 +139,9 @@
       "originalPrice": null,
       "category": "beauty",
       "brandId": "brand_004",
-      "image": "/assets/products/matte-lipstick-set.jpg",
+      "image": "/assets/products/matte-lipstick-set.svg",
       "images": [
-        "/assets/products/matte-lipstick-set.jpg"
+        "/assets/products/matte-lipstick-set.svg"
       ],
       "videos": [],
       "badge": null,
@@ -155,9 +155,9 @@
       "originalPrice": 699,
       "category": "beauty",
       "brandId": "brand_002",
-      "image": "/assets/products/rose-clay-mask.jpg",
+      "image": "/assets/products/rose-clay-mask.svg",
       "images": [
-        "/assets/products/rose-clay-mask.jpg"
+        "/assets/products/rose-clay-mask.svg"
       ],
       "videos": [],
       "badge": "Sale",
@@ -171,9 +171,9 @@
       "originalPrice": null,
       "category": "clothes",
       "brandId": "brand_003",
-      "image": "/assets/products/satin-slip-skirt.jpg",
+      "image": "/assets/products/satin-slip-skirt.svg",
       "images": [
-        "/assets/products/satin-slip-skirt.jpg"
+        "/assets/products/satin-slip-skirt.svg"
       ],
       "videos": [],
       "badge": null,
@@ -187,9 +187,9 @@
       "originalPrice": 449,
       "category": "beauty",
       "brandId": "brand_004",
-      "image": "/assets/products/kajal-duo.jpg",
+      "image": "/assets/products/kajal-duo.svg",
       "images": [
-        "/assets/products/kajal-duo.jpg"
+        "/assets/products/kajal-duo.svg"
       ],
       "videos": [],
       "badge": "Sale",
@@ -203,8 +203,10 @@
       "originalPrice": 2199,
       "category": "fashion",
       "brandId": "brand_003",
-      "image": "",
-      "images": [],
+      "image": "/assets/products/crossbody-purse.svg",
+      "images": [
+        "/assets/products/crossbody-purse.svg"
+      ],
       "videos": [],
       "badge": "Hot",
       "stock": 20
@@ -217,8 +219,10 @@
       "originalPrice": 2999,
       "category": "fashion",
       "brandId": "brand_001",
-      "image": "",
-      "images": [],
+      "image": "/assets/products/stiletto-heels.svg",
+      "images": [
+        "/assets/products/stiletto-heels.svg"
+      ],
       "videos": [],
       "badge": "New",
       "stock": 14
@@ -231,8 +235,10 @@
       "originalPrice": 999,
       "category": "fashion",
       "brandId": "brand_003",
-      "image": "",
-      "images": [],
+      "image": "/assets/products/uv-sunglasses.svg",
+      "images": [
+        "/assets/products/uv-sunglasses.svg"
+      ],
       "videos": [],
       "badge": "Trending",
       "stock": 40
@@ -245,8 +251,10 @@
       "originalPrice": 1599,
       "category": "fashion",
       "brandId": "brand_001",
-      "image": "",
-      "images": [],
+      "image": "/assets/products/velvet-clutch.svg",
+      "images": [
+        "/assets/products/velvet-clutch.svg"
+      ],
       "videos": [],
       "badge": null,
       "stock": 25
@@ -259,8 +267,10 @@
       "originalPrice": 1899,
       "category": "fashion",
       "brandId": "brand_003",
-      "image": "",
-      "images": [],
+      "image": "/assets/products/block-heel-sandals.svg",
+      "images": [
+        "/assets/products/block-heel-sandals.svg"
+      ],
       "videos": [],
       "badge": "Bestseller",
       "stock": 18
@@ -273,8 +283,10 @@
       "originalPrice": 1299,
       "category": "jewellery",
       "brandId": "brand_002",
-      "image": "",
-      "images": [],
+      "image": "/assets/products/choker-necklace.svg",
+      "images": [
+        "/assets/products/choker-necklace.svg"
+      ],
       "videos": [],
       "badge": "New",
       "stock": 35
@@ -287,8 +299,10 @@
       "originalPrice": 899,
       "category": "jewellery",
       "brandId": "brand_004",
-      "image": "",
-      "images": [],
+      "image": "/assets/products/drop-earrings.svg",
+      "images": [
+        "/assets/products/drop-earrings.svg"
+      ],
       "videos": [],
       "badge": "Hot",
       "stock": 45
@@ -301,8 +315,10 @@
       "originalPrice": 1099,
       "category": "jewellery",
       "brandId": "brand_002",
-      "image": "",
-      "images": [],
+      "image": "/assets/products/charm-bracelet.svg",
+      "images": [
+        "/assets/products/charm-bracelet.svg"
+      ],
       "videos": [],
       "badge": null,
       "stock": 30
@@ -315,8 +331,10 @@
       "originalPrice": 699,
       "category": "jewellery",
       "brandId": "brand_004",
-      "image": "",
-      "images": [],
+      "image": "/assets/products/gold-ring-set.svg",
+      "images": [
+        "/assets/products/gold-ring-set.svg"
+      ],
       "videos": [],
       "badge": "Sale",
       "stock": 50

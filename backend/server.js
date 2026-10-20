@@ -3,8 +3,10 @@
 // Serves the two static frontends (user + admin) and mounts API routes.
 
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const { PORT } = require('./config');
 const connectDB = require('./db');
 
@@ -13,8 +15,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ---------- Static frontends ----------
+// ---------- Static frontends & redirects ----------
 app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
+app.get(['/admin', '/admin/'], (req, res) => res.redirect('/admin/login.html'));
 app.use('/admin', express.static(path.join(__dirname, '..', 'frontend', 'admin')));
 app.use('/', express.static(path.join(__dirname, '..', 'frontend', 'user')));
 
@@ -38,6 +41,50 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// ---------- Global error handling ----------
+app.use((err, req, res, next) => {
+  console.error('Unhandled server error:', err);
+  res.status(err.status || 500).json({
+    message: err.message || 'Internal Server Error'
+  });
+});
+
+async function autoSeedIfEmpty() {
+  try {
+    const Admin = require('./models/Admin');
+    const Product = require('./models/Product');
+    const Brand = require('./models/Brand');
+
+    const adminCount = await Admin.countDocuments();
+    const productCount = await Product.countDocuments();
+
+    if (adminCount === 0 || productCount === 0) {
+      console.log('Database empty or uninitialized. Checking database.json for initial seed...');
+      const dbPath = path.join(__dirname, 'data', 'database.json');
+      if (fs.existsSync(dbPath)) {
+        const raw = fs.readFileSync(dbPath, 'utf-8');
+        const data = JSON.parse(raw);
+
+        if (adminCount === 0 && Array.isArray(data.admins) && data.admins.length > 0) {
+          await Admin.insertMany(data.admins);
+          console.log(`✓ Auto-seeded ${data.admins.length} admins`);
+        }
+        if (productCount === 0 && Array.isArray(data.products) && data.products.length > 0) {
+          const brandCount = await Brand.countDocuments();
+          if (brandCount === 0 && Array.isArray(data.brands) && data.brands.length > 0) {
+            await Brand.insertMany(data.brands);
+            console.log(`✓ Auto-seeded ${data.brands.length} brands`);
+          }
+          await Product.insertMany(data.products);
+          console.log(`✓ Auto-seeded ${data.products.length} products`);
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Auto-seed notice:', err.message);
+  }
+}
+
 async function startServer() {
   // 1. Start HTTP server FIRST so Render port binding succeeds immediately!
   app.listen(PORT, () => {
@@ -49,11 +96,13 @@ async function startServer() {
   // 2. Connect to MongoDB with auto-retry
   try {
     await connectDB();
+    await autoSeedIfEmpty();
   } catch (err) {
     console.warn('Initial MongoDB connection attempt deferred. Retrying in background...');
     const retryInterval = setInterval(async () => {
       try {
         await connectDB();
+        await autoSeedIfEmpty();
         clearInterval(retryInterval);
       } catch (retryErr) {
         // Will keep retrying in background

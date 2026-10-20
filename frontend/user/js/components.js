@@ -69,7 +69,7 @@ function showCosmosInfoModal() {
 
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">
         <div style="font-size:0.8rem; color:var(--muted);">
-          <b>Admin Portal:</b> <a href="login.html" style="color:var(--primary); font-weight:600;">Admin Login</a>
+          <b>Admin Portal:</b> <a href="/admin/login.html" style="color:var(--primary); font-weight:600;">Admin Login</a>
         </div>
         <button class="primary-btn" id="gotItCosmosBtn" style="padding:0.5rem 1.4rem; font-size:0.85rem;">Browse Products</button>
       </div>

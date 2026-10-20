@@ -31,6 +31,10 @@ function getTransporter() {
 
 const defaultFrom = process.env.EMAIL_FROM || '"Cosmos Fashion & Beauty" <no-reply@cosmos.com>';
 
+function getBaseUrl() {
+  return process.env.CLIENT_URL || process.env.BASE_URL || process.env.RENDER_EXTERNAL_URL || ('http://localhost:' + (process.env.PORT || 5000));
+}
+
 // 1. Welcome Email on User Registration
 async function sendWelcomeEmail({ email, name }) {
   try {
@@ -72,7 +76,7 @@ async function sendWelcomeEmail({ email, name }) {
           </div>
 
           <div style="text-align: center;">
-            <a href="http://localhost:5000/shop.html" class="cta-btn">Start Shopping Now →</a>
+            <a href="${getBaseUrl()}/shop.html" class="cta-btn">Start Shopping Now →</a>
           </div>
         </div>
         <div class="footer">
@@ -212,7 +216,7 @@ async function sendOrderConfirmationEmail({ order, user }) {
           </div>
 
           <div style="text-align: center; margin-top: 25px;">
-            <a href="http://localhost:5000/orders.html" class="cta-btn">View My Orders & Track →</a>
+            <a href="${getBaseUrl()}/orders.html" class="cta-btn">View My Orders & Track →</a>
           </div>
         </div>
         <div class="footer">
@@ -292,7 +296,7 @@ async function sendOrderStatusEmail({ order, user, status }) {
           </div>
 
           <div>
-            <a href="http://localhost:5000/orders.html" class="cta-btn">Track Order Live →</a>
+            <a href="${getBaseUrl()}/orders.html" class="cta-btn">Track Order Live →</a>
           </div>
         </div>
         <div class="footer">

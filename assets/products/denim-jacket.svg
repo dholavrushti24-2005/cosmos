@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff"/>
+      <stop offset="50%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#eff6ff"/>
+    </linearGradient>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#2563eb" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="600" height="700" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle Aesthetic Geometric Rings -->
+  <circle cx="300" cy="310" r="180" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-opacity="0.15"/>
+  <circle cx="300" cy="310" r="140" fill="none" stroke="#2563eb" stroke-width="1" stroke-dasharray="6,6" stroke-opacity="0.2"/>
+
+  <!-- Category Tag -->
+  <g transform="translate(40, 50)">
+    <rect width="110" height="32" rx="16" fill="#2563eb" fill-opacity="0.12"/>
+    <text x="55" y="21" font-family="'Poppins', sans-serif" font-size="12" font-weight="700" fill="#2563eb" letter-spacing="1.5" text-anchor="middle" text-transform="uppercase">Clothes</text>
+  </g>
+
+  <!-- Central Card & Vector Artwork -->
+  <g filter="url(#shadow)" transform="translate(100, 120)">
+    <rect width="400" height="380" rx="28" fill="#ffffff" fill-opacity="0.85"/>
+    <g transform="translate(200, 190)">
+      <path d="M-60,-90 L-110,-40 L-80,0 L-50,-20 L-50,80 L50,80 L50,-20 L80,0 L110,-40 L60,-90 L25,-70 C15,-55 -15,-55 -25,-70 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="4"/>
+    <line x1="0" y1="-55" x2="0" y2="80" stroke="#1d4ed8" stroke-width="3" stroke-dasharray="4,4"/>
+    <circle cx="0" y="-30" r="4" fill="#fbbf24"/>
+    <circle cx="0" y="0" r="4" fill="#fbbf24"/>
+    <circle cx="0" y="30" r="4" fill="#fbbf24"/>
+    <circle cx="0" y="60" r="4" fill="#fbbf24"/>
+    <rect x="-35" y="-10" width="22" height="22" rx="3" fill="none" stroke="#1d4ed8" stroke-width="2"/>
+    <rect x="13" y="-10" width="22" height="22" rx="3" fill="none" stroke="#1d4ed8" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- Typography -->
+  <text x="300" y="555" font-family="'Poppins', sans-serif" font-size="25" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="-0.5">Denim Jacket</text>
+  <text x="300" y="585" font-family="'Poppins', sans-serif" font-size="14" font-weight="500" fill="#64748b" text-anchor="middle">Classic Distressed Vintage Wash</text>
+  
+  <!-- Quality Emblem -->
+  <g transform="translate(300, 630)">
+    <rect x="-90" y="-16" width="180" height="32" rx="16" fill="url(#primaryGrad)"/>
+    <text x="0" y="5" font-family="'Poppins', sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="1">✨ COSMOS LUXURY</text>
+  </g>
+</svg>

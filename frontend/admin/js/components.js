@@ -91,7 +91,9 @@ function requireAdminAuth() {
   const token = localStorage.getItem('cosmos_admin_token');
   if (!token) {
     window.location.href = 'login.html';
+    return false;
   }
+  return true;
 }
 
 /* ---------- Shared modal (used by Products add-edit forms) ---------- */

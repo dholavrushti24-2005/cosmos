@@ -367,7 +367,7 @@ function openProductForm(product = null) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  requireAdminAuth();
+  if (!requireAdminAuth()) return;
   renderAdminShell('Products');
   loadProducts();
 

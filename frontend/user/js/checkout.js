@@ -244,6 +244,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       submitBtn.textContent = 'Finalizing order...';
     }
 
+    try {
       let appliedCoupon = null;
       let orderDiscount = 0;
       try {

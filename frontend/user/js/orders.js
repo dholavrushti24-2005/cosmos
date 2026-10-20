@@ -130,9 +130,9 @@ function openInvoiceModal(orderId) {
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
           <div>
             <div style="font-weight:700; color:#334155; margin-bottom:0.2rem; text-transform:uppercase; font-size:0.75rem;">Customer Details & Shipping Address:</div>
-            <div style="font-weight:700; color:#0f172a;">${order.shipping.name}</div>
-            <div style="color:#64748b; line-height:1.4;">${order.shipping.address}, ${order.shipping.city} - ${order.shipping.pincode}</div>
-            <div style="color:#64748b;">Phone: ${order.shipping.phone}</div>
+            <div style="font-weight:700; color:#0f172a;">${(order.shipping && order.shipping.name) || 'Valued Customer'}</div>
+            <div style="color:#64748b; line-height:1.4;">${(order.shipping && order.shipping.address) || ''}, ${(order.shipping && order.shipping.city) || ''} - ${(order.shipping && order.shipping.pincode) || ''}</div>
+            <div style="color:#64748b;">Phone: ${(order.shipping && order.shipping.phone) || '—'}</div>
           </div>
           <div style="text-align:right;">
             <div style="font-weight:700; color:#334155; margin-bottom:0.2rem; text-transform:uppercase; font-size:0.75rem;">Payment Information:</div>
@@ -241,6 +241,9 @@ async function returnOrder(orderId) {
     showToast(err.message || 'Error returning order', 'error');
   }
 }
+
+window.cancelOrder = cancelOrder;
+window.returnOrder = returnOrder;
 
 async function loadOrders() {
   const list = document.getElementById('ordersList');

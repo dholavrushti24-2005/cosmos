@@ -4,12 +4,12 @@ function recentOrderRow(order) {
   const date = new Date(order.createdAt).toLocaleDateString('en-IN', {
     day: 'numeric', month: 'short',
   });
-  const itemsSummary = order.items.map(i => `${i.name} x${i.qty}`).join(', ');
+  const itemsSummary = (order.items || []).map(i => `${i.name} x${i.qty}`).join(', ');
 
   return `
     <tr>
-      <td>#${order.id.slice(-8)}<br><span style="color:var(--muted); font-size:0.78rem;">${date}</span></td>
-      <td>${order.shipping.name}</td>
+      <td>#${(order.id || '').slice(-8)}<br><span style="color:var(--muted); font-size:0.78rem;">${date}</span></td>
+      <td>${(order.shipping && order.shipping.name) || 'Customer'}</td>
       <td style="max-width:260px;">${itemsSummary}</td>
       <td>₹${order.total}</td>
       <td><span class="status-pill status-${order.status}">${order.status}</span></td>
@@ -18,7 +18,7 @@ function recentOrderRow(order) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  requireAdminAuth();
+  if (!requireAdminAuth()) return;
   renderAdminShell('Dashboard');
 
   try {

@@ -55,7 +55,7 @@ async function setUserStatus(id, status) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  requireAdminAuth();
+  if (!requireAdminAuth()) return;
   renderAdminShell('Users');
   loadUsers();
 
