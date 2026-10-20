@@ -5,14 +5,24 @@ const dns = require('dns');
 const mongoose = require('mongoose');
 const { MONGODB_URI } = require('./config');
 
-// Use Google Public DNS only on local Windows (fixes Jio/Reliance ISP SRV DNS issues locally).
-// Do NOT override DNS on Render / Cloud Linux containers as container internal DNS is required.
-if (!process.env.RENDER && process.platform === 'win32') {
-  try {
-    dns.setServers(['8.8.8.8', '8.8.4.4']);
-  } catch (e) {
-    // ignore
+// Configure DNS for MongoDB Atlas SRV resolution
+try {
+  if (dns.setDefaultResultOrder) {
+    dns.setDefaultResultOrder('ipv4first');
   }
+  dns.setServers(['8.8.8.8', '8.8.4.4']);
+} catch (e) {
+  // ignore
+}
+
+// Converts a MongoDB Atlas SRV URI for cluster0.shmq1yg.mongodb.net into a standard replica-set URI
+// which bypasses DNS SRV lookups entirely and connects directly to the 3 shard hosts.
+function getStandardReplicaSetUri(uri) {
+  if (!uri || typeof uri !== 'string') return null;
+  const match = uri.match(/mongodb\+srv:\/\/([^:]+):([^@]+)@cluster0\.shmq1yg\.mongodb\.net\/([^?]+)(.*)/);
+  if (!match) return null;
+  const [, user, pass, db] = match;
+  return `mongodb://${user}:${pass}@ac-wfwxcxz-shard-00-00.shmq1yg.mongodb.net:27017,ac-wfwxcxz-shard-00-01.shmq1yg.mongodb.net:27017,ac-wfwxcxz-shard-00-02.shmq1yg.mongodb.net:27017/${db}?ssl=true&replicaSet=atlas-kitlz6-shard-0&authSource=admin&retryWrites=true&w=majority`;
 }
 
 let isConnecting = false;
@@ -23,10 +33,25 @@ async function connectDB() {
 
   isConnecting = true;
   try {
-    const conn = await mongoose.connect(MONGODB_URI, {
-      serverSelectionTimeoutMS: 15000,
-      family: 4, // Force IPv4 to prevent Node 24 IPv6 lookup timeouts on Render/cloud
-    });
+    let conn;
+    try {
+      conn = await mongoose.connect(MONGODB_URI, {
+        serverSelectionTimeoutMS: 8000,
+        family: 4,
+      });
+    } catch (srvErr) {
+      const fallbackUri = getStandardReplicaSetUri(MONGODB_URI);
+      if (fallbackUri && fallbackUri !== MONGODB_URI) {
+        console.warn('SRV connection attempt timed out or failed. Retrying with direct replica-set standard connection...');
+        conn = await mongoose.connect(fallbackUri, {
+          serverSelectionTimeoutMS: 10000,
+          family: 4,
+        });
+      } else {
+        throw srvErr;
+      }
+    }
+
     const host = conn.connection.host || 'Atlas Cluster';
     const dbName = conn.connection.name || 'cosmos';
     console.log(`✓ Connected to MongoDB: ${host}/${dbName}`);
