@@ -50,6 +50,9 @@ app.use((err, req, res, next) => {
 });
 
 async function autoSeedIfEmpty() {
+  if (mongoose.connection.readyState !== 1) {
+    return;
+  }
   try {
     const Admin = require('./models/Admin');
     const Product = require('./models/Product');
@@ -99,15 +102,25 @@ async function startServer() {
     await autoSeedIfEmpty();
   } catch (err) {
     console.warn('Initial MongoDB connection attempt deferred. Retrying in background...');
+    let retrying = false;
     const retryInterval = setInterval(async () => {
+      if (mongoose.connection.readyState === 1) {
+        clearInterval(retryInterval);
+        await autoSeedIfEmpty();
+        return;
+      }
+      if (retrying) return;
+      retrying = true;
       try {
         await connectDB();
         await autoSeedIfEmpty();
         clearInterval(retryInterval);
       } catch (retryErr) {
         // Will keep retrying in background
+      } finally {
+        retrying = false;
       }
-    }, 5000);
+    }, 10000);
   }
 }
 

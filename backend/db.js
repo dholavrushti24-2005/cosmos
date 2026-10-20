@@ -15,22 +15,27 @@ if (!process.env.RENDER && process.platform === 'win32') {
   }
 }
 
-let isConnected = false;
+let isConnecting = false;
 
 async function connectDB() {
-  if (isConnected && mongoose.connection.readyState === 1) return;
+  if (mongoose.connection.readyState === 1) return mongoose.connection;
+  if (isConnecting || mongoose.connection.readyState === 2) return;
+
+  isConnecting = true;
   try {
     const conn = await mongoose.connect(MONGODB_URI, {
       serverSelectionTimeoutMS: 15000,
       family: 4, // Force IPv4 to prevent Node 24 IPv6 lookup timeouts on Render/cloud
     });
-    isConnected = true;
-    console.log(`Connected to MongoDB: ${conn.connection.host}:${conn.connection.port}/${conn.connection.name}`);
+    const host = conn.connection.host || 'Atlas Cluster';
+    const dbName = conn.connection.name || 'cosmos';
+    console.log(`✓ Connected to MongoDB: ${host}/${dbName}`);
     return conn;
   } catch (error) {
-    isConnected = false;
     console.error('MongoDB connection error:', error.message);
     throw error;
+  } finally {
+    isConnecting = false;
   }
 }
 
