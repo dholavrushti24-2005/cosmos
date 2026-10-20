@@ -15,14 +15,31 @@ try {
   // ignore
 }
 
-// Converts a MongoDB Atlas SRV URI for cluster0.shmq1yg.mongodb.net into a standard replica-set URI
-// which bypasses DNS SRV lookups entirely and connects directly to the 3 shard hosts.
-function getStandardReplicaSetUri(uri) {
-  if (!uri || typeof uri !== 'string') return null;
-  const match = uri.match(/mongodb\+srv:\/\/([^:]+):([^@]+)@cluster0\.shmq1yg\.mongodb\.net\/([^?]+)(.*)/);
-  if (!match) return null;
-  const [, user, pass, db] = match;
-  return `mongodb://${user}:${pass}@ac-wfwxcxz-shard-00-00.shmq1yg.mongodb.net:27017,ac-wfwxcxz-shard-00-01.shmq1yg.mongodb.net:27017,ac-wfwxcxz-shard-00-02.shmq1yg.mongodb.net:27017/${db}?ssl=true&replicaSet=atlas-kitlz6-shard-0&authSource=admin&retryWrites=true&w=majority`;
+// Dynamically converts any MongoDB Atlas SRV URI into a direct replica-set URI
+// to bypass cloud SRV/DNS issues if they occur.
+async function resolveSrvToStandardUri(srvUri) {
+  if (!srvUri || typeof srvUri !== 'string' || !srvUri.startsWith('mongodb+srv://')) return null;
+  try {
+    const match = srvUri.match(/mongodb\+srv:\/\/([^:]+):([^@]+)@([^/?]+)\/?([^?]*)/);
+    if (!match) return null;
+    const [, user, pass, host, db] = match;
+    const addresses = await dns.promises.resolveSrv(`_mongodb._tcp.${host}`);
+    if (!addresses || addresses.length === 0) return null;
+    const hostList = addresses.map(a => `${a.name}:${a.port}`).join(',');
+
+    let extraParams = 'ssl=true&authSource=admin&retryWrites=true&w=majority';
+    try {
+      const txt = await dns.promises.resolveTxt(host);
+      if (txt && txt[0] && txt[0][0]) {
+        extraParams = `ssl=true&${txt[0][0]}&retryWrites=true&w=majority`;
+      }
+    } catch (_) {}
+
+    const dbName = db || 'cosmos';
+    return `mongodb://${user}:${pass}@${hostList}/${dbName}?${extraParams}`;
+  } catch (err) {
+    return null;
+  }
 }
 
 let isConnecting = false;
@@ -39,7 +56,7 @@ async function connectDB() {
         serverSelectionTimeoutMS: 6000,
       });
     } catch (srvErr) {
-      const fallbackUri = getStandardReplicaSetUri(MONGODB_URI);
+      const fallbackUri = await resolveSrvToStandardUri(MONGODB_URI);
       if (fallbackUri && fallbackUri !== MONGODB_URI) {
         console.warn('SRV connection attempt timed out or failed. Retrying with direct replica-set standard connection...');
         try {
