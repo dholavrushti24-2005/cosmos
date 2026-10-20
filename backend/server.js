@@ -31,12 +31,34 @@ app.use('/api/orders', require('./routes/orders'));
 app.use('/api/upload', require('./routes/upload'));
 app.use('/api/reviews', require('./routes/reviews'));
 
-// ---------- Health check ----------
-app.get('/api/health', (req, res) => {
+// ---------- Health check & diagnostics ----------
+app.get('/api/health', async (req, res) => {
   const isMongoReady = mongoose.connection.readyState === 1;
+  let outboundIp = 'unknown';
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000);
+    const ipRes = await fetch('https://api.ipify.org?format=json', { signal: controller.signal });
+    clearTimeout(timeout);
+    const ipData = await ipRes.json();
+    outboundIp = ipData.ip;
+  } catch (e) {
+    outboundIp = 'Detection skipped: ' + e.message;
+  }
+
+  const rawUri = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.DATABASE_URL || '';
+  let targetHost = 'local';
+  if (rawUri.includes('@')) {
+    targetHost = rawUri.split('@')[1].split('?')[0];
+  }
+
   res.json({
     status: 'ok',
     database: isMongoReady ? 'connected' : 'connecting',
+    readyState: mongoose.connection.readyState,
+    renderOutboundIp: outboundIp,
+    mongoTargetHost: targetHost,
+    lastMongoError: global.lastMongoError || null,
     message: isMongoReady ? 'Cosmos backend running with MongoDB' : 'Cosmos backend running, establishing MongoDB connection...'
   });
 });

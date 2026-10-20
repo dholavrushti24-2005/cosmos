@@ -36,17 +36,23 @@ async function connectDB() {
     let conn;
     try {
       conn = await mongoose.connect(MONGODB_URI, {
-        serverSelectionTimeoutMS: 8000,
-        family: 4,
+        serverSelectionTimeoutMS: 6000,
       });
     } catch (srvErr) {
       const fallbackUri = getStandardReplicaSetUri(MONGODB_URI);
       if (fallbackUri && fallbackUri !== MONGODB_URI) {
         console.warn('SRV connection attempt timed out or failed. Retrying with direct replica-set standard connection...');
-        conn = await mongoose.connect(fallbackUri, {
-          serverSelectionTimeoutMS: 10000,
-          family: 4,
-        });
+        try {
+          conn = await mongoose.connect(fallbackUri, {
+            serverSelectionTimeoutMS: 8000,
+          });
+        } catch (fbErr) {
+          console.warn('Direct connection fallback attempt with family:4...');
+          conn = await mongoose.connect(fallbackUri, {
+            serverSelectionTimeoutMS: 8000,
+            family: 4,
+          });
+        }
       } else {
         throw srvErr;
       }
@@ -55,8 +61,10 @@ async function connectDB() {
     const host = conn.connection.host || 'Atlas Cluster';
     const dbName = conn.connection.name || 'cosmos';
     console.log(`✓ Connected to MongoDB: ${host}/${dbName}`);
+    global.lastMongoError = null;
     return conn;
   } catch (error) {
+    global.lastMongoError = error.message;
     console.error('MongoDB connection error:', error.message);
     throw error;
   } finally {
