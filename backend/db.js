@@ -43,8 +43,43 @@ async function resolveSrvToStandardUri(srvUri) {
 }
 
 let isConnecting = false;
+let listenersAttached = false;
+
+function attachConnectionListeners() {
+  if (listenersAttached) return;
+  listenersAttached = true;
+
+  mongoose.connection.on('disconnected', () => {
+    console.warn('⚠️ MongoDB connection dropped! Scheduling automatic reconnect in 3s...');
+    setTimeout(() => {
+      connectDB().catch(err => {
+        console.error('Auto-reconnect attempt failed:', err.message);
+      });
+    }, 3000);
+  });
+
+  mongoose.connection.on('error', (err) => {
+    console.error('MongoDB runtime connection error:', err.message);
+    global.lastMongoError = err.message;
+  });
+
+  mongoose.connection.on('reconnected', () => {
+    console.log('✓ MongoDB reconnected successfully');
+    global.lastMongoError = null;
+  });
+}
+
+const MONGO_OPTIONS = {
+  serverSelectionTimeoutMS: 8000,
+  socketTimeoutMS: 45000,
+  heartbeatFrequencyMS: 10000, // Send keep-alive ping every 10s so Atlas doesn't close idle sockets
+  maxPoolSize: 10,
+  minPoolSize: 1,
+};
 
 async function connectDB() {
+  attachConnectionListeners();
+
   if (mongoose.connection.readyState === 1) return mongoose.connection;
   if (isConnecting || mongoose.connection.readyState === 2) return;
 
@@ -52,21 +87,17 @@ async function connectDB() {
   try {
     let conn;
     try {
-      conn = await mongoose.connect(MONGODB_URI, {
-        serverSelectionTimeoutMS: 6000,
-      });
+      conn = await mongoose.connect(MONGODB_URI, MONGO_OPTIONS);
     } catch (srvErr) {
       const fallbackUri = await resolveSrvToStandardUri(MONGODB_URI);
       if (fallbackUri && fallbackUri !== MONGODB_URI) {
         console.warn('SRV connection attempt timed out or failed. Retrying with direct replica-set standard connection...');
         try {
-          conn = await mongoose.connect(fallbackUri, {
-            serverSelectionTimeoutMS: 8000,
-          });
+          conn = await mongoose.connect(fallbackUri, MONGO_OPTIONS);
         } catch (fbErr) {
           console.warn('Direct connection fallback attempt with family:4...');
           conn = await mongoose.connect(fallbackUri, {
-            serverSelectionTimeoutMS: 8000,
+            ...MONGO_OPTIONS,
             family: 4,
           });
         }

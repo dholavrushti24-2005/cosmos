@@ -21,7 +21,23 @@ app.get(['/admin', '/admin/'], (req, res) => res.redirect('/admin/login.html'));
 app.use('/admin', express.static(path.join(__dirname, '..', 'frontend', 'admin')));
 app.use('/', express.static(path.join(__dirname, '..', 'frontend', 'user')));
 
-// ---------- API routes ----------
+// ---------- API readiness & routes ----------
+// Ensure MongoDB connection is alive before processing API queries (prevents 10s buffer timeout)
+app.use('/api', async (req, res, next) => {
+  if (req.path === '/health') return next();
+
+  if (mongoose.connection.readyState !== 1) {
+    try {
+      await connectDB();
+    } catch (err) {
+      return res.status(503).json({
+        message: 'Database is reconnecting. Please wait 3-5 seconds and try again.'
+      });
+    }
+  }
+  next();
+});
+
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/brands', require('./routes/brands'));
