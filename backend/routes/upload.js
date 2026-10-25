@@ -1,30 +1,15 @@
 // backend/routes/upload.js
 // Handles file uploads for product images and videos.
+// Converts uploaded images to Base64 data URLs so they are permanently stored in MongoDB,
+// eliminating the issue where Render's ephemeral disk deletes uploaded files.
 
-const path = require('path');
-const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const { requireAuth, requireAdmin } = require('../middleware/auth');
 
-// Ensure uploads folder exists
-const uploadDir = path.join(__dirname, '..', '..', 'assets', 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Storage engine configuration
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname).toLowerCase();
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, 'file-' + uniqueSuffix + ext);
-  }
-});
+// Store in memory so files can be converted to Base64 Data URLs for MongoDB
+const storage = multer.memoryStorage();
 
 // File filter for images and videos
 const fileFilter = (req, file, cb) => {
@@ -42,27 +27,34 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
-  limits: { fileSize: 50 * 1024 * 1024 } // 50MB max file size
+  limits: { fileSize: 30 * 1024 * 1024 } // 30MB max file size
 });
 
-// POST /api/upload — upload one or multiple files
-router.post('/', requireAuth, requireAdmin, upload.array('files', 10), (req, res) => {
+// POST /api/upload — upload files from admin gallery, return Base64 Data URLs for MongoDB
+router.post('/', requireAuth, requireAdmin, upload.array('files', 10), async (req, res) => {
   if (!req.files || req.files.length === 0) {
     return res.status(400).json({ message: 'No files uploaded.' });
   }
 
-  const filesData = req.files.map(file => {
-    const isVideo = file.mimetype.startsWith('video/');
-    return {
-      url: `/assets/uploads/${file.filename}`,
-      name: file.originalname,
-      type: isVideo ? 'video' : 'image',
-      mimetype: file.mimetype,
-      size: file.size
-    };
-  });
+  try {
+    const filesData = req.files.map(file => {
+      const isVideo = file.mimetype.startsWith('video/');
+      const base64Data = `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
 
-  res.json({ files: filesData });
+      return {
+        url: base64Data,
+        name: file.originalname,
+        type: isVideo ? 'video' : 'image',
+        mimetype: file.mimetype,
+        size: file.size
+      };
+    });
+
+    res.json({ files: filesData });
+  } catch (err) {
+    console.error('Upload processing error:', err);
+    res.status(500).json({ message: 'Failed to process media: ' + (err.message || 'Unknown error') });
+  }
 }, (error, req, res, next) => {
   if (error) {
     return res.status(400).json({ message: error.message || 'File upload failed.' });

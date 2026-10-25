@@ -106,10 +106,60 @@ function renderMediaGrid() {
   gridEl.innerHTML = html;
 }
 
+function compressImageForDatabase(file, maxDimension = 1200, quality = 0.82) {
+  return new Promise((resolve) => {
+    if (!file.type || !file.type.startsWith('image/') || file.type === 'image/svg+xml') {
+      return resolve(file);
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxDimension || height > maxDimension) {
+          if (width > height) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          } else {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob((blob) => {
+          if (!blob || blob.size >= file.size) {
+            resolve(file);
+          } else {
+            const optimized = new File([blob], file.name.replace(/\.[^/.]+$/, "") + ".jpg", {
+              type: 'image/jpeg',
+              lastModified: Date.now()
+            });
+            resolve(optimized);
+          }
+        }, 'image/jpeg', quality);
+      };
+      img.onerror = () => resolve(file);
+      img.src = e.target.result;
+    };
+    reader.onerror = () => resolve(file);
+    reader.readAsDataURL(file);
+  });
+}
+
 async function uploadMediaFiles(files) {
   const formData = new FormData();
   for (let file of files) {
-    formData.append('files', file);
+    const processed = await compressImageForDatabase(file);
+    formData.append('files', processed);
   }
 
   const token = localStorage.getItem('cosmos_admin_token');
